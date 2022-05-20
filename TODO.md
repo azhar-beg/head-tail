@@ -2,6 +2,7 @@
 - [ ] Make head work on multiple files without any option.
 
 **MAYBE:**
+- [ ] Consider better contract for head.
 
 **DONE:**
 - [x] Implement `-n` option for one file.
