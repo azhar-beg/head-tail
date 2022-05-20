@@ -1,8 +1,10 @@
 **TODO:**
-- [ ] Implement `-n` option for one file.
+- [ ] Make head work on multiple files without any option.
+
 **MAYBE:**
 
 **DONE:**
+- [x] Implement `-n` option for one file.
 - [x] pass `-n` and `-c` option to headMain.
 - [x] Use parseArgs in headMain.
 - [x] Implemented parsedArgs.

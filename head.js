@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const main = () => {
   try {
-    console.log(headMain(fs.readFileSync, process.argv[2]));
+    console.log(headMain(fs.readFileSync, ...process.argv.slice(2)));
   } catch (error) {
     console.log('usage: head [-n lines | -c bytes] [file ...]');
   }
