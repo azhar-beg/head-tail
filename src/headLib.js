@@ -1,4 +1,4 @@
-const { splitLines, joinLines } = require('./line.js');
+const { splitLines, joinLines } = require('./stringUtils.js');
 const headLines = (lines) => lines.slice(0, 10);
 
 const head = function (content) {

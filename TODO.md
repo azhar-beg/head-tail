@@ -2,11 +2,13 @@
 - [ ] Make `head file` working for single file.
 
 **MAYBE:**
-- [ ] Consider renaming src/head.js.
 - [ ] Consider changing the name of headLines function.
 
 
 **DONE:**
+- [x] Consider renaming src/head.js.
+- [x] Split tests of headMain into separate file.
+- [x] Change name of line.js.
 - [x] Create headMain
 - [x] Consider moving splitLines and joinLines in different file.
 - [x] Extract split and join lines in different function.
