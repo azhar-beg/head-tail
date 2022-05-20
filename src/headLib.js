@@ -1,13 +1,13 @@
-const { splitLines, joinLines } = require('./stringUtils.js');
+const { splitContent, joinContent } = require('./stringUtils.js');
 const { parseArgs } = require('./parseArgs.js');
 
-const firstNLines = (lines, lineCount) => lines.slice(0, lineCount);
+const extractContent = (content, count) => content.slice(0, count);
 
 const head = function (content, { option, count }) {
   const separator = option === 'character' ? '' : '\n';
-  const lines = splitLines(content, separator);
-  const firstLines = firstNLines(lines, count);
-  return joinLines(firstLines, separator);
+  const splittedContent = splitContent(content, separator);
+  const extractedContent = extractContent(splittedContent, count);
+  return joinContent(extractedContent, separator);
 };
 
 const headMain = function (readFile, ...args) {
@@ -16,6 +16,6 @@ const headMain = function (readFile, ...args) {
   return head(content, parsedArgs);
 };
 
-exports.firstNLines = firstNLines;
+exports.extractContent = extractContent;
 exports.head = head;
 exports.headMain = headMain;

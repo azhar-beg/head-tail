@@ -2,9 +2,11 @@
 - [ ] Make head work on multiple files without any option.
 
 **MAYBE:**
-- [ ] Consider better contract for head.
 
 **DONE:**
+- [x] change names of stringUtils functions.
+- [x] Change functions and variable names.
+- [x] Consider better contract for head.
 - [x] Implement `-n` option for one file.
 - [x] pass `-n` and `-c` option to headMain.
 - [x] Use parseArgs in headMain.
