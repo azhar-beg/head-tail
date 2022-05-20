@@ -9,7 +9,7 @@ const head = function (content, { count, separator }) {
 
 const headMain = function (readFile, file) {
   const content = readFile(file, 'utf8');
-  return head(content, { lineCount: 10 });
+  return head(content, { count: 10, separator: '\n' });
 };
 
 exports.firstNLines = firstNLines;

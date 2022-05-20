@@ -13,7 +13,7 @@ describe('parseArgs', () => {
     assert.deepStrictEqual(parseArgs(args), parsedArgs);
   });
 
-  it.only('should parse args for character option', () => {
+  it('should parse args for character option', () => {
     const args = ['-c', 2, './a.txt'];
     const parsedArgs = { fileName: './a.txt', option: 'character', count: 2 };
     assert.deepStrictEqual(parseArgs(args), parsedArgs);
