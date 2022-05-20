@@ -1,6 +1,7 @@
 `'usage: head [-n lines | -c bytes] [file ...]'`
 
-```head file
+```
+head file
     This filter displays the first count lines or bytes of each of the specified files.  If count is omitted it defaults to 10.
  
 head -n lines file
