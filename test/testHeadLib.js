@@ -34,16 +34,29 @@ describe('firstNLines', () => {
 
 describe('head', () => {
   it('should return given lines of content', () => {
-    assert.deepStrictEqual(head('hi\nhello', { lineCount: 10 }), 'hi\nhello');
+    const option = { count: 10, separator: '\n' };
+    assert.deepStrictEqual(head('hi\nhello', option), 'hi\nhello');
   });
 
   it('should return 10 lines when content has are more than 10 lines', () => {
     const content = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12';
     const expected = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10';
-    assert.deepStrictEqual(head(content, { lineCount: 10 }), expected);
+    const option = { count: 10, separator: '\n' };
+    assert.deepStrictEqual(head(content, option), expected);
   });
 
   it('should return 1 line', () => {
-    assert.deepStrictEqual(head('hello\nbye', { lineCount: 1 }), 'hello');
+    const option = { count: 1, separator: '\n' };
+    assert.deepStrictEqual(head('hello\nbye', option), 'hello');
+  });
+
+  it('should return a character of line', () => {
+    const option = { count: 1, separator: '' };
+    assert.deepStrictEqual(head('hello\nbye', option), 'h');
+  });
+
+  it('should return characters of two line', () => {
+    const option = { count: 5, separator: '' };
+    assert.deepStrictEqual(head('hey\nbye', option), 'hey\nb');
   });
 });

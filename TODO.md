@@ -1,9 +1,10 @@
 **TODO:**
-- [ ] Implement -n option for one file.
+- [ ] Implement `-n` option for one file.
 **MAYBE:**
-- [ ] Consider changing the name of headLines function.
 
 **DONE:**
+- [x] Implement head for character [-c].
+- [x] Consider changing the name of headLines function.
 - [x] Add lineCount argument for head.
 - [x] Consider renaming src/head.js.
 - [x] Make `head file` working for single file.

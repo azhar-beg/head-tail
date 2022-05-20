@@ -1,10 +1,10 @@
 const { splitLines, joinLines } = require('./stringUtils.js');
 const firstNLines = (lines, lineCount) => lines.slice(0, lineCount);
 
-const head = function (content, { lineCount }) {
-  const lines = splitLines(content);
-  const firstLines = firstNLines(lines, lineCount);
-  return joinLines(firstLines);
+const head = function (content, { count, separator }) {
+  const lines = splitLines(content, separator);
+  const firstLines = firstNLines(lines, count);
+  return joinLines(firstLines, separator);
 };
 
 const headMain = function (readFile, file) {

@@ -1,6 +1,2 @@
-const NEWLINE = '\n';
-const splitLines = content => content.split(NEWLINE);
-const joinLines = lines => lines.join(NEWLINE);
-
-exports.splitLines = splitLines;
-exports.joinLines = joinLines;
+exports.splitLines = (content, separator) => content.split(separator);
+exports.joinLines = (lines, separator) => lines.join(separator);
