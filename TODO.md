@@ -3,6 +3,7 @@
 **MAYBE:**
 
 **DONE:**
+- [x] Implemented parsedArgs.
 - [x] Implement head for character [-c].
 - [x] Consider changing the name of headLines function.
 - [x] Add lineCount argument for head.
