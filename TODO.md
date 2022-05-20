@@ -4,6 +4,7 @@
 - [ ] Consider changing the name of headLines function.
 
 **DONE:**
+- [x] Add lineCount argument for head.
 - [x] Consider renaming src/head.js.
 - [x] Make `head file` working for single file.
 - [x] Split tests of headMain into separate file.
