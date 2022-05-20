@@ -1,8 +1,9 @@
 `'usage: head [-n lines | -c bytes] [file ...]'`
 
 ```
-head file
-    This filter displays the first count lines or bytes of each of the specified files.  If count is omitted it defaults to 10.
+head file1 file2 ...
+    display first lines of a file. By default it will show maximum 10 lines.
+    It should work for multiple files in the same way.
  
 head -n lines file1 file2 ..
     Displays the first count of lines as specified in option.
