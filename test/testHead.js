@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { headLines, head } = require('../src/head.js');
+const { headLines, head, headMain } = require('../src/head.js');
 
 describe('headLines', () => {
   it('Should return given line for one line', () => {
@@ -30,5 +30,20 @@ describe('head', () => {
     const content = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12';
     const expected = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10';
     assert.deepStrictEqual(head(content), expected);
+  });
+});
+
+const shouldReturn = (mockFile, content) => {
+  return function (fileName, encoding) {
+    assert.equal(mockFile, fileName);
+    assert.equal(encoding, 'utf8');
+    return content;
+  };
+};
+
+describe('headMain', () => {
+  it('Should display the lines of given file', () => {
+    const mockedReadFile = shouldReturn('./a.txt', 'hello\nhi');
+    assert.deepStrictEqual(headMain('./a.txt', mockedReadFile), 'hello\nhi');
   });
 });

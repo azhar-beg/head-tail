@@ -7,5 +7,11 @@ const head = function (content) {
   return joinLines(firstLines);
 };
 
+const headMain = function (file, readFile) {
+  const content = readFile(file, 'utf8');
+  return head(content);
+};
+
 exports.headLines = headLines;
 exports.head = head;
+exports.headMain = headMain;

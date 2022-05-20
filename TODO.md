@@ -7,6 +7,7 @@
 
 
 **DONE:**
+- [x] Create headMain
 - [x] Consider moving splitLines and joinLines in different file.
 - [x] Extract split and join lines in different function.
 - [x] Implement head that will work for file content.
