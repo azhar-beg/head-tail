@@ -12,7 +12,7 @@ const head = function (content, { option, count }) {
 
 const headMain = function (readFile, ...args) {
   const parsedArgs = parseArgs(args);
-  const content = readFile(parsedArgs.fileName, 'utf8');
+  const content = readFile(parsedArgs.fileNames[0], 'utf8');
   return head(content, parsedArgs);
 };
 

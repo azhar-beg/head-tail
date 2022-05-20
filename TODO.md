@@ -1,9 +1,10 @@
 **TODO:**
 - [ ] Make head work on multiple files without any option.
-
+- [ ] Make head work with content of multiple files.
 **MAYBE:**
 
 **DONE:**
+- [x] Make parse returns multiple files name
 - [x] change names of stringUtils functions.
 - [x] Change functions and variable names.
 - [x] Consider better contract for head.

@@ -1,8 +1,10 @@
 const parseArgs = (args) => {
-  const fileName = args[args.length - 1];
+  const regEx = /-[cn]/;
+  const firstFileIndex = regEx.test(args[0]) ? 2 : 0;
+  const fileNames = args.slice(firstFileIndex);
   const option = args[0] === '-c' ? 'character' : 'number';
   const count = isFinite(args[1]) ? +args[1] : 10;
-  return { fileName, option, count };
+  return { fileNames, option, count };
 };
 
 exports.parseArgs = parseArgs;
