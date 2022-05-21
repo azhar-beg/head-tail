@@ -76,3 +76,5 @@ describe('headMain', () => {
     assert.deepStrictEqual(actual, expected);
   });
 });
+
+exports.mockReadFile = mockReadFile;

@@ -1,6 +1,7 @@
 **TODO:**
 - [ ] Validate `parseArgs`
 - [ ] Refactor `parseArgs`
+- [ ] work on parse error.
 **MAYBE:**
 - [ ] Consider separating test from `testHeadLib`
 - [ ] Consider better name for `headMultipleFile`.

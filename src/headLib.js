@@ -21,17 +21,20 @@ const headMultipleFiles = function (filesContent, subArgs) {
   return headContent;
 };
 
+const readFile = function (fileReader, fileName) {
+  try {
+    const content = fileReader(fileName, 'utf8');
+    return { fileName, content, fileExist: true };
+  } catch (error) {
+    return { fileName, fileExist: false };
+  }
+};
+
 const headMain = function (readFile, ...args) {
   const { fileNames, subArgs } = parseArgs(args);
   const filesContent = [];
   for (let index = 0; index < fileNames.length; index++) {
-    const fileName = fileNames[index];
-    try {
-      const content = readFile(fileNames[index], 'utf8');
-      filesContent.push({ fileName, content, fileExist: true });
-    } catch (error) {
-      filesContent.push({ fileName, fileExist: false });
-    }
+    filesContent.push(readFile(readFile, fileNames[index]));
   }
   return headMultipleFiles(filesContent, subArgs);
 };
@@ -58,10 +61,9 @@ const printHead = function (readFile, ...args) {
   }
 };
 
-// const logContent
 exports.extractContent = extractContent;
 exports.head = head;
 exports.headMain = headMain;
 exports.headMultipleFiles = headMultipleFiles;
 exports.printHead = printHead;
-// exports.formatContent = formatContent;
+exports.readFile = readFile;

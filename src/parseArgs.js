@@ -1,4 +1,3 @@
-
 const isError = args => args.includes('-n') && args.includes('-c');
 
 const firstFileIndex = function (args) {

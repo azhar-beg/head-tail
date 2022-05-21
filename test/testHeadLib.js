@@ -1,5 +1,6 @@
 const assert = require('assert');
-const { formatContent, headMultipleFiles, extractContent, head } = require('../src/headLib.js');
+const { readFile, headMultipleFiles, extractContent, head } = require('../src/headLib.js');
+const { mockReadFile } = require('./testHeadMain');
 
 describe('extractContent', () => {
   it('Should return given line for one line', () => {
@@ -12,17 +13,9 @@ describe('extractContent', () => {
   });
 
   it('should return 10 lines when total lines are more than 10', () => {
-    let lines = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
-    let expected = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+    const lines = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
+    const expected = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
     assert.deepStrictEqual(extractContent(lines, 10), expected);
-
-    lines = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-    expected = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-    assert.deepStrictEqual(extractContent(lines, 10), expected);
-  });
-
-  it('should return only one line', () => {
-    assert.deepStrictEqual(extractContent(['hey', 'hi'], 1), ['hey']);
   });
 
   it('should return 11 lines', () => {
@@ -87,17 +80,10 @@ describe('headMultipleFiles', () => {
   });
 });
 
-describe('formatContent', () => {
-  it('Should format extracted content of single file', () => {
-    const content = [{ fileName: 'a.txt', extractedContent: 'hello', fileExist: true }];
-    assert.deepStrictEqual(formatContent(content), 'hello');
-  });
-
-  it('Should format extracted content of multiple files', () => {
-    const file1 = { fileName: 'a.txt', extractedContent: 'hello', fileExist: true };
-    const file2 = { fileName: 'b.txt', extractedContent: 'bye', fileExist: true }
-    const content = [file1, file2];
-    const expected = '==> a.txt <==\nhello\n\n==> b.txt <==\nbye';
-    assert.deepStrictEqual(formatContent(content), expected);
+describe('readFile', () => {
+  it.only('Should read a file', () => {
+    const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
+    const expected = { fileName: 'a.txt', fileExist: true, content: 'hello' };
+    assert.deepStrictEqual(readFile(mockedReadFile, 'a.txt'), expected);
   });
 });
