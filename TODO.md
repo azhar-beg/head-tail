@@ -4,10 +4,10 @@
 - [ ] Validate parseArgs
 - [ ] Add mockReadFile that will take multiple file in object.
 - [ ] Refactor parseArgs
-- [ ] Extract formatting work from headMultipleFile
 **MAYBE:**
-
+- [ ] Consider better name for headMultipleFile.
 **DONE:**
+- [x] Extract formatting work from headMultipleFile
 - [x] Update parseArgs, it should return error for wrong args
 - [x] Make parse returns multiple files name
 - [x] change names of stringUtils functions.
