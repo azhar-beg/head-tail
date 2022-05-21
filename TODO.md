@@ -2,6 +2,9 @@
 - [ ] Make head work on multiple files without any option.
 - [ ] Make head work with content of multiple files.
 - [ ] Validate parseArgs
+- [ ] Add mockReadFile that will take multiple file in object.
+- [ ] Refactor parseArgs
+- [ ] Extract formatting work from headMultipleFile
 **MAYBE:**
 
 **DONE:**

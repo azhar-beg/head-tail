@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { extractContent, head } = require('../src/headLib.js');
+const { headMultipleFiles, extractContent, head } = require('../src/headLib.js');
 
 describe('extractContent', () => {
   it('Should return given line for one line', () => {
@@ -58,5 +58,21 @@ describe('head', () => {
   it('should return characters of two line', () => {
     const options = { option: 'character', count: 5 };
     assert.deepStrictEqual(head('hey\nbye', options), 'hey\nb');
+  });
+});
+
+describe('headMultipleFiles', () => {
+  it('should head multiple file content', () => {
+    const expected = '==> a.txt <==\nhello\n==> b.txt <==\nbye';
+    const file1 = { fileName: 'a.txt', content: 'hello' };
+    const file2 = { fileName: 'b.txt', content: 'bye' };
+    const filesContent = [file1, file2];
+    const subArgs = { option: 'number', count: '10' }
+    assert.deepStrictEqual(headMultipleFiles(filesContent, subArgs), expected);
+  });
+  it('should head content of single file', () => {
+    const content = { fileName: 'b.txt', content: 'bye' };
+    const subArgs = { option: 'number', count: '10' }
+    assert.deepStrictEqual(headMultipleFiles([content], subArgs), 'bye');
   });
 });

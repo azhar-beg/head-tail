@@ -10,12 +10,28 @@ const head = function (content, { option, count }) {
   return joinContent(extractedContent, separator);
 };
 
+const headMultipleFiles = function (filesContent, subArgs) {
+  const headContent = filesContent.map(({ fileName, content }) => {
+    const extractedContent = head(content, subArgs);
+    return { fileName, extractedContent };
+  });
+
+  if (headContent.length <= 1) {
+    return headContent[0].extractedContent;
+  }
+
+  return headContent.map(({ fileName, extractedContent }) => {
+    return `==> ${fileName} <==\n${extractedContent}`;
+  }).join('\n');
+};
+
 const headMain = function (readFile, ...args) {
-  const parsedArgs = parseArgs(args);
-  const content = readFile(parsedArgs.fileNames[0], 'utf8');
-  return head(content, parsedArgs);
+  const { fileNames, subArgs } = parseArgs(args);
+  const content = readFile(fileNames[0], 'utf8');
+  return head(content, subArgs);
 };
 
 exports.extractContent = extractContent;
 exports.head = head;
 exports.headMain = headMain;
+exports.headMultipleFiles = headMultipleFiles;
