@@ -1,12 +1,12 @@
 **TODO:**
 - [ ] Validate `parseArgs`
 - [ ] Refactor `parseArgs`
-- [ ] Show error message on std error.
 **MAYBE:**
 - [ ] Consider separating test from `testHeadLib`
 - [ ] Consider better name for `headMultipleFile`.
 
 **DONE:**
+- [x] Show error message on std error.
 - [x] Validate headMain for wrong fileName.
 - [x] Check if head.js working with options for multiple files.
 - [x] Make head work on multiple files without any option.

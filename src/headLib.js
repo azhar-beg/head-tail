@@ -1,5 +1,6 @@
 const { splitContent, joinContent } = require('./stringUtils.js');
 const { parseArgs } = require('./parseArgs.js');
+const { readFile } = require('fs');
 
 const extractContent = (content, count) => content.slice(0, count);
 
@@ -8,20 +9,6 @@ const head = function (content, { option, count }) {
   const splittedContent = splitContent(content, separator);
   const extractedContent = extractContent(splittedContent, count);
   return joinContent(extractedContent, separator);
-};
-
-const formatContent = function (content) {
-  if (content.length <= 1) {
-    const message = `head: ${content[0].fileName}: No such file or directory`;
-    return content[0].fileExist ? content[0].extractedContent : message;
-  }
-  return content.map(({ fileName, extractedContent, fileExist }) => {
-    if (fileExist) {
-      return `==> ${fileName} <==\n${extractedContent}`;
-    }
-    const message = `head: ${fileName}: No such file or directory`;
-    return message;
-  }).join('\n\n');
 };
 
 const headMultipleFiles = function (filesContent, subArgs) {
@@ -50,9 +37,31 @@ const headMain = function (readFile, ...args) {
   return headMultipleFiles(filesContent, subArgs);
 };
 
+const printHead = function (readFile, ...args) {
+  const content = headMain(readFile, ...args);
+  if (content.length <= 1) {
+    if (!content[0].fileExist) {
+      console.error(`head: ${content[0].fileName}: No such file or directory`);
+    } else {
+      console.log(content[0].extractedContent);
+    }
+  }
+  let separator = '';
+  content.map(({ fileName, extractedContent, fileExist }) => {
+    if (fileExist) {
+      console.log(`${separator}==> ${fileName} <==\n${extractedContent}`);
+    } else {
+      const message = `head: ${fileName}: No such file or directory`;
+      console.error(separator + message);
+    }
+    separator = '\n';
+  });
+};
+
 // const logContent
 exports.extractContent = extractContent;
 exports.head = head;
 exports.headMain = headMain;
 exports.headMultipleFiles = headMultipleFiles;
-exports.formatContent = formatContent;
+exports.printHead = printHead;
+// exports.formatContent = formatContent;
