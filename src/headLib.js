@@ -30,11 +30,11 @@ const readFile = function (fileReader, fileName) {
   }
 };
 
-const headMain = function (readFile, ...args) {
+const headMain = function (fileReader, ...args) {
   const { fileNames, subArgs } = parseArgs(args);
   const filesContent = [];
   for (let index = 0; index < fileNames.length; index++) {
-    filesContent.push(readFile(readFile, fileNames[index]));
+    filesContent.push(readFile(fileReader, fileNames[index]));
   }
   return headMultipleFiles(filesContent, subArgs);
 };

@@ -81,7 +81,7 @@ describe('headMultipleFiles', () => {
 });
 
 describe('readFile', () => {
-  it.only('Should read a file', () => {
+  it('Should read a file', () => {
     const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
     const expected = { fileName: 'a.txt', fileExist: true, content: 'hello' };
     assert.deepStrictEqual(readFile(mockedReadFile, 'a.txt'), expected);
