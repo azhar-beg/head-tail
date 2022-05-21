@@ -12,28 +12,41 @@ const head = function (content, { option, count }) {
 
 const formatContent = function (content) {
   if (content.length <= 1) {
-    return content[0].extractedContent;
+    const message = `head: ${content[0].fileName}: No such file or directory`;
+    return content[0].fileExist ? content[0].extractedContent : message;
   }
-  return content.map(({ fileName, extractedContent }) => {
-    return `==> ${fileName} <==\n${extractedContent}`;
+  return content.map(({ fileName, extractedContent, fileExist }) => {
+    if (fileExist) {
+      return `==> ${fileName} <==\n${extractedContent}`;
+    }
+    const message = `head: ${fileName}: No such file or directory`;
+    return message;
   }).join('\n\n');
 };
 
 const headMultipleFiles = function (filesContent, subArgs) {
-  const headContent = filesContent.map(({ fileName, content }) => {
-    const extractedContent = head(content, subArgs);
-    return { fileName, extractedContent };
+  const headContent = filesContent.map(({ fileName, content, fileExist }) => {
+    if (fileExist) {
+      const extractedContent = head(content, subArgs);
+      return { fileName, extractedContent, fileExist };
+    }
+    return { fileName, fileExist };
   });
-
   return formatContent(headContent);
 };
 
 const headMain = function (readFile, ...args) {
   const { fileNames, subArgs } = parseArgs(args);
-  const filesContent = fileNames.map(fileName => {
-    const content = readFile(fileName, 'utf8');
-    return { fileName, content };
-  });
+  const filesContent = [];
+  for (let index = 0; index < fileNames.length; index++) {
+    const fileName = fileNames[index];
+    try {
+      const content = readFile(fileNames[index], 'utf8');
+      filesContent.push({ fileName, content, fileExist: true });
+    } catch (error) {
+      filesContent.push({ fileName, fileExist: false });
+    }
+  }
   return headMultipleFiles(filesContent, subArgs);
 };
 

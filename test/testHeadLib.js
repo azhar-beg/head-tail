@@ -64,15 +64,15 @@ describe('head', () => {
 describe('headMultipleFiles', () => {
   it('should head multiple file content', () => {
     const expected = '==> a.txt <==\nhello\n\n==> b.txt <==\nbye';
-    const file1 = { fileName: 'a.txt', content: 'hello' };
-    const file2 = { fileName: 'b.txt', content: 'bye' };
+    const file1 = { fileName: 'a.txt', content: 'hello', fileExist: true };
+    const file2 = { fileName: 'b.txt', content: 'bye', fileExist: true };
     const filesContent = [file1, file2];
-    const subArgs = { option: 'number', count: '10' }
+    const subArgs = { option: 'number', count: '10' };
     assert.deepStrictEqual(headMultipleFiles(filesContent, subArgs), expected);
   });
 
   it('should head content of single file', () => {
-    const content = { fileName: 'b.txt', content: 'bye' };
+    const content = { fileName: 'b.txt', content: 'bye', fileExist: true };
     const subArgs = { option: 'number', count: '10' }
     assert.deepStrictEqual(headMultipleFiles([content], subArgs), 'bye');
   });
@@ -80,13 +80,13 @@ describe('headMultipleFiles', () => {
 
 describe('formatContent', () => {
   it('Should format extracted content of single file', () => {
-    const content = [{ fileName: 'a.txt', extractedContent: 'hello' }];
+    const content = [{ fileName: 'a.txt', extractedContent: 'hello', fileExist: true }];
     assert.deepStrictEqual(formatContent(content), 'hello');
   });
 
   it('Should format extracted content of multiple files', () => {
-    const file1 = { fileName: 'a.txt', extractedContent: 'hello' };
-    const file2 = { fileName: 'b.txt', extractedContent: 'bye' }
+    const file1 = { fileName: 'a.txt', extractedContent: 'hello', fileExist: true };
+    const file2 = { fileName: 'b.txt', extractedContent: 'bye', fileExist: true }
     const content = [file1, file2];
     const expected = '==> a.txt <==\nhello\n\n==> b.txt <==\nbye';
     assert.deepStrictEqual(formatContent(content), expected);
