@@ -1,6 +1,5 @@
 const { splitContent, joinContent } = require('./stringUtils.js');
 const { parseArgs } = require('./parseArgs.js');
-const { readFile } = require('fs');
 
 const extractContent = (content, count) => content.slice(0, count);
 
@@ -45,17 +44,18 @@ const printHead = function (readFile, ...args) {
     } else {
       console.log(content[0].extractedContent);
     }
+  } else {
+    let separator = '';
+    content.map(({ fileName, extractedContent, fileExist }) => {
+      if (fileExist) {
+        console.log(`${separator}==> ${fileName} <==\n${extractedContent}`);
+      } else {
+        const message = `head: ${fileName}: No such file or directory`;
+        console.error(separator + message);
+      }
+      separator = '\n';
+    });
   }
-  let separator = '';
-  content.map(({ fileName, extractedContent, fileExist }) => {
-    if (fileExist) {
-      console.log(`${separator}==> ${fileName} <==\n${extractedContent}`);
-    } else {
-      const message = `head: ${fileName}: No such file or directory`;
-      console.error(separator + message);
-    }
-    separator = '\n';
-  });
 };
 
 // const logContent
