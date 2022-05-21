@@ -6,9 +6,6 @@ const firstFileIndex = function (args) {
       return index;
     }
   }
-  return args.reduce((fileINdex, arg) => {
-    return isFinite(arg) || arg.includes('-') ? fileINdex + 1 : fileINdex;
-  }, 0);
 };
 
 const optionIndex = function (args) {
@@ -33,7 +30,7 @@ const parseArgs = function (args) {
   const option = args[optionIn] === '-c' ? 'character' : 'number';
   const countIn = optionIn + 1;
   const count = isFinite(+args[countIn]) ? +args[countIn] : 10;
-  return { fileNames, option, count };
+  return { fileNames, subArgs: { option, count } };
 };
 
 exports.parseArgs = parseArgs;
