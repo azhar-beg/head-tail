@@ -63,7 +63,7 @@ describe('head', () => {
 
 describe('headMultipleFiles', () => {
   it('should head multiple file content', () => {
-    const expected = '==> a.txt <==\nhello\n==> b.txt <==\nbye';
+    const expected = '==> a.txt <==\nhello\n\n==> b.txt <==\nbye';
     const file1 = { fileName: 'a.txt', content: 'hello' };
     const file2 = { fileName: 'b.txt', content: 'bye' };
     const filesContent = [file1, file2];
@@ -88,7 +88,7 @@ describe('formatContent', () => {
     const file1 = { fileName: 'a.txt', extractedContent: 'hello' };
     const file2 = { fileName: 'b.txt', extractedContent: 'bye' }
     const content = [file1, file2];
-    const expected = '==> a.txt <==\nhello\n==> b.txt <==\nbye';
+    const expected = '==> a.txt <==\nhello\n\n==> b.txt <==\nbye';
     assert.deepStrictEqual(formatContent(content), expected);
   });
 });

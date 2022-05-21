@@ -1,12 +1,15 @@
 **TODO:**
-- [ ] Make head work on multiple files without any option.
-- [ ] Make head work with content of multiple files.
-- [ ] Validate parseArgs
-- [ ] Add mockReadFile that will take multiple file in object.
-- [ ] Refactor parseArgs
+- [ ] Validate `parseArgs`
+- [ ] Refactor `parseArgs`
+- [ ] Check if head.js working with options for multiple files.
 **MAYBE:**
-- [ ] Consider better name for headMultipleFile.
+- [ ] Consider separating test from `testHeadLib`
+- [ ] Consider better name for `headMultipleFile`.
+
 **DONE:**
+- [x] Make head work on multiple files without any option.
+- [x] Make head work with content of multiple files.
+- [x] Add mockReadFile that will take multiple file in object.
 - [x] Extract formatting work from headMultipleFile
 - [x] Update parseArgs, it should return error for wrong args
 - [x] Make parse returns multiple files name

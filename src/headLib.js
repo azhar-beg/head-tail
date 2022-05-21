@@ -16,7 +16,7 @@ const formatContent = function (content) {
   }
   return content.map(({ fileName, extractedContent }) => {
     return `==> ${fileName} <==\n${extractedContent}`;
-  }).join('\n');
+  }).join('\n\n');
 };
 
 const headMultipleFiles = function (filesContent, subArgs) {
@@ -30,8 +30,11 @@ const headMultipleFiles = function (filesContent, subArgs) {
 
 const headMain = function (readFile, ...args) {
   const { fileNames, subArgs } = parseArgs(args);
-  const content = readFile(fileNames[0], 'utf8');
-  return head(content, subArgs);
+  const filesContent = fileNames.map(fileName => {
+    const content = readFile(fileName, 'utf8');
+    return { fileName, content };
+  });
+  return headMultipleFiles(filesContent, subArgs);
 };
 
 exports.extractContent = extractContent;
