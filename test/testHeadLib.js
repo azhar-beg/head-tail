@@ -63,7 +63,12 @@ describe('head', () => {
 
 describe('headMultipleFiles', () => {
   it('should head multiple file content', () => {
-    const expected = '==> a.txt <==\nhello\n\n==> b.txt <==\nbye';
+    const expected = [{
+      fileName: 'a.txt', extractedContent: 'hello',
+      fileExist: true
+    },
+    { fileName: 'b.txt', extractedContent: 'bye', fileExist: true }
+    ];
     const file1 = { fileName: 'a.txt', content: 'hello', fileExist: true };
     const file2 = { fileName: 'b.txt', content: 'bye', fileExist: true };
     const filesContent = [file1, file2];
@@ -73,8 +78,12 @@ describe('headMultipleFiles', () => {
 
   it('should head content of single file', () => {
     const content = { fileName: 'b.txt', content: 'bye', fileExist: true };
+    const expected = [{
+      fileName: 'b.txt', extractedContent: 'bye',
+      fileExist: true
+    }];
     const subArgs = { option: 'number', count: '10' }
-    assert.deepStrictEqual(headMultipleFiles([content], subArgs), 'bye');
+    assert.deepStrictEqual(headMultipleFiles([content], subArgs), expected);
   });
 });
 

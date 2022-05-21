@@ -32,7 +32,7 @@ const headMultipleFiles = function (filesContent, subArgs) {
     }
     return { fileName, fileExist };
   });
-  return formatContent(headContent);
+  return headContent;
 };
 
 const headMain = function (readFile, ...args) {
@@ -50,6 +50,7 @@ const headMain = function (readFile, ...args) {
   return headMultipleFiles(filesContent, subArgs);
 };
 
+// const logContent
 exports.extractContent = extractContent;
 exports.head = head;
 exports.headMain = headMain;
