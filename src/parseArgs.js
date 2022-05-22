@@ -1,36 +1,50 @@
-const isError = args => args.includes('-n') && args.includes('-c');
+const { createIterator } = require('./createIterator.js');
 
-const firstFileIndex = function (args) {
-  for (let index = 0; index < args.length; index++) {
-    if (!isFinite(args[index]) && !args[index].includes('-')) {
-      return index;
-    }
-  }
+const isOption = arg => (/^-[cn]\d*$/).test(arg);
+
+const doesOptionContainsCount = option => (/^-[cn]\d+$/).test(option);
+
+const getDigit = option => option.match(/(\d)+/)[0];
+
+const getSwitch = option => option.match(/-./)[0];
+
+const isSwitchSame = (option1, option2) => {
+  return option1 ? option1.option === option2.option : true;
 };
 
-const optionIndex = function (args) {
-  let index = 0;
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === '-c' || args[i] === '-n') {
-      index = i;
-    }
+const appendCount = function (argsIterator, currentArg) {
+  if (doesOptionContainsCount(currentArg)) {
+    const option = getSwitch(currentArg);
+    const count = +getDigit(currentArg);
+    return { option, count };
   }
-  return index;
+  const nextArg = argsIterator.nextArg();
+  if (isFinite(nextArg)) {
+    return { option: currentArg, count: +nextArg };
+  }
+  throw { name: 'head: illegal line count -- int' };
+};
+
+const getOption = function (argsIterator, option) {
+  const currentArg = argsIterator.currentArg();
+  if (!isOption(currentArg)) {
+    return option;
+  }
+  const nextOption = appendCount(argsIterator, currentArg);
+  argsIterator.nextArg();
+  if (isSwitchSame(option, nextOption)) {
+    return getOption(argsIterator, nextOption);
+  }
+  throw { name: 'head: can\'t combine line and byte counts' };
 };
 
 const parseArgs = function (args) {
-  if (isError(args)) {
-    throw {
-      name: 'head: can\'t combine line and byte counts'
-    };
-  }
-  const startFileIndex = firstFileIndex(args);
-  const fileNames = args.slice(startFileIndex);
-  const optionIn = optionIndex(args);
-  const option = args[optionIn] === '-c' ? 'character' : 'number';
-  const countIn = optionIn + 1;
-  const count = isFinite(+args[countIn]) ? +args[countIn] : 10;
-  return { fileNames, subArgs: { option, count } };
+  const argsIterator = createIterator(args);
+  let subArgs;
+  subArgs = getOption(argsIterator, subArgs);
+  subArgs = subArgs ? subArgs : { option: '-n', count: 10 };
+  const fileNames = argsIterator.restOfArgs();
+  return { fileNames, subArgs };
 };
 
 exports.parseArgs = parseArgs;

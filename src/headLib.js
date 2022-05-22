@@ -4,7 +4,7 @@ const { parseArgs } = require('./parseArgs.js');
 const extractContent = (content, count) => content.slice(0, count);
 
 const head = function (content, { option, count }) {
-  const separator = option === 'character' ? '' : '\n';
+  const separator = option === '-c' ? '' : '\n';
   const splittedContent = splitContent(content, separator);
   const extractedContent = extractContent(splittedContent, count);
   return joinContent(extractedContent, separator);

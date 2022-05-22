@@ -27,29 +27,29 @@ describe('extractContent', () => {
 
 describe('head', () => {
   it('should return given lines of content', () => {
-    const options = { option: 'number', count: 10 };
+    const options = { option: '-n', count: 10 };
     assert.deepStrictEqual(head('hi\nhello', options), 'hi\nhello');
   });
 
   it('should return 10 lines when content has are more than 10 lines', () => {
-    const options = { option: 'number', count: 10 };
+    const options = { option: '-n', count: 10 };
     const content = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12';
     const expected = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10';
     assert.deepStrictEqual(head(content, options), expected);
   });
 
   it('should return 1 line', () => {
-    const options = { option: 'number', count: 1 };
+    const options = { option: '-n', count: 1 };
     assert.deepStrictEqual(head('hello\nbye', options), 'hello');
   });
 
   it('should return a character of line', () => {
-    const options = { option: 'character', count: 1 };
+    const options = { option: '-c', count: 1 };
     assert.deepStrictEqual(head('hello\nbye', options), 'h');
   });
 
   it('should return characters of two line', () => {
-    const options = { option: 'character', count: 5 };
+    const options = { option: '-c', count: 5 };
     assert.deepStrictEqual(head('hey\nbye', options), 'hey\nb');
   });
 });
@@ -65,7 +65,7 @@ describe('headMultipleFiles', () => {
     const file1 = { fileName: 'a.txt', content: 'hello', fileExist: true };
     const file2 = { fileName: 'b.txt', content: 'bye', fileExist: true };
     const filesContent = [file1, file2];
-    const subArgs = { option: 'number', count: '10' };
+    const subArgs = { option: '-n', count: '10' };
     assert.deepStrictEqual(headMultipleFiles(filesContent, subArgs), expected);
   });
 
@@ -75,7 +75,7 @@ describe('headMultipleFiles', () => {
       fileName: 'b.txt', extractedContent: 'bye',
       fileExist: true
     }];
-    const subArgs = { option: 'number', count: '10' }
+    const subArgs = { option: '-n', count: '10' }
     assert.deepStrictEqual(headMultipleFiles([content], subArgs), expected);
   });
 });
