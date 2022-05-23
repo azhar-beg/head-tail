@@ -57,7 +57,7 @@ const printHead = function (readFile, ...args) {
         console.log(`${separator}==> ${fileName} <==\n${extractedContent}`);
       } else {
         const message = `head: ${fileName}: No such file or directory`;
-        console.error(separator + message);
+        console.error(message);
       }
       separator = '\n';
     });

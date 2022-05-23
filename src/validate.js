@@ -1,9 +1,15 @@
-const illegalCount = (name, count) => {
-  return { message: `head: illegal ${name} count -- ${count}` };
-};
-
 const areSwitchesSame = (option1, option2) => {
   return option1 ? option1.option === option2.option : true;
+};
+
+const noArg = () => {
+  return {
+    message: 'usage: head[-n lines | -c bytes][file ...]'
+  };
+};
+
+const illegalCount = (name, count) => {
+  return { message: `head: illegal ${name} count -- ${count}` };
 };
 
 const illegalOption = (option) => {
@@ -47,6 +53,14 @@ const assertOnlyOne = function (option1, option2) {
   throw illegalCombination();
 };
 
+const assertNoArg = (args) => {
+  if (args.length) {
+    return true;
+  }
+  throw noArg();
+};
+
 exports.assertCountValidity = assertCountValidity;
 exports.assertOnlyOne = assertOnlyOne;
 exports.assertOptionValidity = assertOptionValidity;
+exports.assertNoArg = assertNoArg;
