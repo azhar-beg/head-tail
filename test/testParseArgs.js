@@ -88,7 +88,7 @@ describe('getOptions', () => {
     assert.throws(() => getOptions(iterator), expected);
   });
 
-  it.only('should throw error for no arguments', () => {
+  it('should throw error for no arguments', () => {
     const iterator = createIterator([]);
     const expected = { message: 'usage: head[-n lines | -c bytes][file ...]' };
     assert.throws(() => getOptions(iterator), expected);

@@ -42,31 +42,8 @@ const headMain = function (fileReader, ...args) {
   return headMultipleFiles(filesContent, subArgs);
 };
 
-const printHead = function (readFile, ...args) {
-  const content = headMain(readFile, ...args);
-  if (content.length <= 1) {
-    if (!content[0].fileExist) {
-      console.error(`head: ${content[0].fileName}: No such file or directory`);
-    } else {
-      console.log(content[0].extractedContent);
-    }
-  } else {
-    let separator = '';
-    content.map(({ fileName, extractedContent, fileExist }) => {
-      if (fileExist) {
-        console.log(`${separator}==> ${fileName} <==\n${extractedContent}`);
-      } else {
-        const message = `head: ${fileName}: No such file or directory`;
-        console.error(message);
-      }
-      separator = '\n';
-    });
-  }
-};
-
 exports.extractContent = extractContent;
 exports.head = head;
 exports.headMain = headMain;
 exports.headMultipleFiles = headMultipleFiles;
-exports.printHead = printHead;
 exports.readFile = readFile;
