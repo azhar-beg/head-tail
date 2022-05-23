@@ -1,12 +1,12 @@
 **TODO:**
 - [ ] Validate `parseArgs`
 - [ ] Test getOption
-- [ ] Make parse work for `-number`
 **MAYBE:**
 - [ ] Consider separating test from `testHeadLib`
 - [ ] Consider better name for `headMultipleFile`.
 
 **DONE:**
+- [x] Make parse work for `-number`
 - [x] Test CreateIterator
 - [x] work on parse error.
 - [x] Refactor `parseArgs`

@@ -1,12 +1,15 @@
 const { createIterator } = require('./createIterator.js');
 
-const isOption = arg => (/^-[cn]\d*$/).test(arg);
+const isOption = arg => (/^-[cn]\d*$|^-\d+/).test(arg);
 
-const doesOptionContainsCount = option => (/^-[cn]\d+$/).test(option);
+const doesOptionContainsCount = option => (/^-[cn]\d+$|^-\d+/).test(option);
 
 const getDigit = option => option.match(/(\d)+/)[0];
 
-const getSwitch = option => option.match(/-./)[0];
+const getSwitch = arg => {
+  const option = arg.slice(0, 2);
+  return /c|n/.test(option) ? option : '-n';
+};
 
 const isSwitchSame = (option1, option2) => {
   return option1 ? option1.option === option2.option : true;
@@ -48,3 +51,4 @@ const parseArgs = function (args) {
 };
 
 exports.parseArgs = parseArgs;
+exports.getOption = getOption;

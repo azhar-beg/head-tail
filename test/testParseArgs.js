@@ -1,5 +1,6 @@
 const assert = require('assert');
-const { parseArgs } = require('../src/parseArgs.js');
+const { getOption, parseArgs } = require('../src/parseArgs.js');
+const { createIterator } = require('../src/createIterator.js');
 
 describe('parseArgs', () => {
   it('should parse args only for file name.', () => {
@@ -53,5 +54,21 @@ describe('parseArgs', () => {
     assert.throws(() => parseArgs(['-c', './a.txt']), {
       message: 'head: illegal line count -- int'
     });
+  });
+
+  it('Should return -n as default option when only number is provided', () => {
+    const args = ['-1', './a.txt'];
+    const subArgs = { option: '-n', count: 1 };
+    const parsedArgs = { fileNames: ['./a.txt'], subArgs: subArgs };
+    assert.deepStrictEqual(parseArgs(args), parsedArgs);
+  });
+});
+
+describe('getOption', () => {
+  it('Should return -n as default, when number is provided', () => {
+    const iterator = createIterator(['-1', 'a.txt']);
+    const subArgs = { option: '-n', count: 1 };
+    let option;
+    assert.deepStrictEqual(getOption(iterator, option), subArgs);
   });
 });
