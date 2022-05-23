@@ -1,52 +1,20 @@
 const { structureArgs } = require('./structureArgs.js')
 const { createIterator } = require('./createIterator.js');
+const { assertCountValidity,
+  assertOnlyOne,
+  assertOptionValidity } = require('./validate.js');
 
 const isOption = arg => arg.startsWith('-');
-
-const areSwitchesSame = (option1, option2) => {
-  return option1 ? option1.option === option2.option : true;
-};
-
-const assertOptionValidity = function (option) {
-  if (['-c', '-n'].includes(option)) {
-    return true;
-  }
-  const message = 'head: illegal option --w';
-  const usage = 'usage: head[-n lines | -c bytes][file ...]';
-  throw { message: message + '\n' + usage };
-};
-
-const assertCountValidity = function (count, option) {
-  const name = { '-n': 'line', '-c': 'byte' };
-  if (+count > 0) {
-    return true;
-  }
-  if (count === 0 || count) {
-    throw { message: `head: illegal ${name[option]} count -- ${count}` };
-  }
-  const message = `head: option requires an argument-- ${option}`;
-  const usage = 'usage: head[-n lines | -c bytes][file ...]';
-  throw { message: message + '\n' + usage };
-};
-
-const assertCombineValidity = function (option1, option2) {
-  if (areSwitchesSame(option1, option2)) {
-    return true;
-  }
-  throw {
-    message: 'head: can\'t combine line and byte counts'
-  };
-};
 
 const getOption = function (argsIterator) {
   let subArgs;
   while (isOption(argsIterator.currentArg()) && argsIterator.currentArg()) {
     const option = argsIterator.currentArg();
     assertOptionValidity(option);
-    const count = +argsIterator.nextArg();
-    assertCountValidity(argsIterator.currentArg(), option);
-    assertCombineValidity(subArgs, { option, count });
-    subArgs = { option, count };
+    const optionVal = argsIterator.nextArg();
+    assertCountValidity(optionVal, option);
+    assertOnlyOne(subArgs, { option, optionVal });
+    subArgs = { option, count: +optionVal };
     argsIterator.nextArg();
   }
   return subArgs;

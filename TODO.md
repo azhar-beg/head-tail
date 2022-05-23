@@ -1,12 +1,13 @@
 **TODO:**
 - [ ] validate args returned from structureArgs
 - [ ] Refactor printHead function
-- [ ] separate validate function
 **MAYBE:**
 - [ ] Consider separating test from `testHeadLib`
 - [ ] Consider better name for `headMultipleFile`.
 
 **DONE:**
+- [x] separate validate function
+- [x] extract error throw in separate function;
 - [x] Change approach for parseArgs
 - [x] Validate `parseArgs`
 - [x] add structureArgs

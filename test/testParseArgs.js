@@ -74,7 +74,15 @@ describe('getOption', () => {
 
   it('should throw an error for invalid option', () => {
     const iterator = createIterator(['-w', '1']);
-    const message = 'head: illegal option --w';
+    const message = 'head: illegal option -- w';
+    const usage = 'usage: head[-n lines | -c bytes][file ...]';
+    const expected = { message: message + '\n' + usage };
+    assert.throws(() => getOption(iterator), expected);
+  });
+
+  it('should throw an error for no option argument', () => {
+    const iterator = createIterator(['-n']);
+    const message = 'head: option requires an argument -- n';
     const usage = 'usage: head[-n lines | -c bytes][file ...]';
     const expected = { message: message + '\n' + usage };
     assert.throws(() => getOption(iterator), expected);
