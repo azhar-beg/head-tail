@@ -1,11 +1,12 @@
 **TODO:**
 - [ ] Validate `parseArgs`
-- [ ] add structureArgs
+- [ ] validate args returned from structureArgs
 **MAYBE:**
 - [ ] Consider separating test from `testHeadLib`
 - [ ] Consider better name for `headMultipleFile`.
 
 **DONE:**
+- [x] add structureArgs
 - [x] Test getOption
 - [x] Refactor headMultipleFiles
 - [x] Make parse work for `-number`
