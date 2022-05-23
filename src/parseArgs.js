@@ -22,7 +22,7 @@ const appendCount = function (argsIterator, currentArg) {
   if (isFinite(nextArg)) {
     return { option: currentArg, count: +nextArg };
   }
-  throw { name: 'head: illegal line count -- int' };
+  throw { message: 'head: illegal line count -- int' };
 };
 
 const getOption = function (argsIterator, option) {
@@ -35,7 +35,7 @@ const getOption = function (argsIterator, option) {
   if (isSwitchSame(option, nextOption)) {
     return getOption(argsIterator, nextOption);
   }
-  throw { name: 'head: can\'t combine line and byte counts' };
+  throw { message: 'head: can\'t combine line and byte counts' };
 };
 
 const parseArgs = function (args) {

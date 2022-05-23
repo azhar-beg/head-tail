@@ -38,7 +38,7 @@ describe('parseArgs', () => {
 
   it('Should throw error for -c and -n together', () => {
     assert.throws(() => parseArgs(['-c', '4', '-n', '5', './a.txt']), {
-      name: 'head: can\'t combine line and byte counts'
+      message: 'head: can\'t combine line and byte counts'
     });
   });
 
@@ -51,7 +51,7 @@ describe('parseArgs', () => {
 
   it('should throw error for invalid count', () => {
     assert.throws(() => parseArgs(['-c', './a.txt']), {
-      name: 'head: illegal line count -- int'
+      message: 'head: illegal line count -- int'
     });
   });
 });
