@@ -1,8 +1,10 @@
 const { createIterator } = require('./createIterator.js');
 
-const isOption = arg => (/^-[cn]\d*$|^-\d+/).test(arg);
+const isValidOption = arg => (/^-[cn]\d*$|^-\d+/).test(arg);
 
-const doesOptionContainsCount = option => (/^-[cn]\d+$|^-\d+/).test(option);
+const doesOptionContainsCount = option => (/[1-9]\d*$/).test(option);
+
+const isCount = arg => (/[1-9]\d*/).test(arg);
 
 const getDigit = option => option.match(/(\d)+/)[0];
 
@@ -22,15 +24,15 @@ const appendCount = function (argsIterator, currentArg) {
     return { option, count };
   }
   const nextArg = argsIterator.nextArg();
-  if (isFinite(nextArg)) {
+  if (isCount(nextArg)) {
     return { option: currentArg, count: +nextArg };
   }
-  throw { message: 'head: illegal line count -- int' };
+  throw { message: `head: illegal line count -- ${nextArg}` };
 };
 
 const getOption = function (argsIterator, option) {
   const currentArg = argsIterator.currentArg();
-  if (!isOption(currentArg)) {
+  if (!isValidOption(currentArg)) {
     return option;
   }
   const nextOption = appendCount(argsIterator, currentArg);
@@ -45,7 +47,7 @@ const parseArgs = function (args) {
   const argsIterator = createIterator(args);
   let subArgs;
   subArgs = getOption(argsIterator, subArgs);
-  subArgs = subArgs ? subArgs : { option: '-n', count: 10 };
+  subArgs = subArgs || { option: '-n', count: 10 };
   const fileNames = argsIterator.restOfArgs();
   return { fileNames, subArgs };
 };

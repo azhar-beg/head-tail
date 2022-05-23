@@ -52,7 +52,7 @@ describe('parseArgs', () => {
 
   it('should throw error for invalid count', () => {
     assert.throws(() => parseArgs(['-c', './a.txt']), {
-      message: 'head: illegal line count -- int'
+      message: 'head: illegal line count -- ./a.txt'
     });
   });
 

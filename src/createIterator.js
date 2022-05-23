@@ -15,8 +15,8 @@ const createIterator = (args) => {
   const argsIterator = {};
   const iterator = { args, index: 0 };
 
-  argsIterator.nextArg = nextArg.bind(iterator);
   argsIterator.currentArg = currentArg.bind(iterator);
+  argsIterator.nextArg = nextArg.bind(iterator);
   argsIterator.restOfArgs = restOfArgs.bind(iterator);
   return argsIterator;
 };

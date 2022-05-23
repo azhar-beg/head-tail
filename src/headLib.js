@@ -10,14 +10,17 @@ const head = function (content, { option, count }) {
   return joinContent(extractedContent, separator);
 };
 
+const structureHead = function ({ fileName, content, fileExist }, subArgs) {
+  if (fileExist) {
+    const extractedContent = head(content, subArgs);
+    return { fileName, extractedContent, fileExist };
+  }
+  return { fileName, fileExist };
+};
+
 const headMultipleFiles = function (filesContent, subArgs) {
-  const headContent = filesContent.map(({ fileName, content, fileExist }) => {
-    if (fileExist) {
-      const extractedContent = head(content, subArgs);
-      return { fileName, extractedContent, fileExist };
-    }
-    return { fileName, fileExist };
-  });
+  const headContent = filesContent.map(fileContent => structureHead(
+    fileContent, subArgs));
   return headContent;
 };
 
