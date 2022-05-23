@@ -1,10 +1,18 @@
 const { printHead } = require('../src/printer.js');
 const assert = require('assert');
 
+const mockReadFile = (files) => {
+  return function (fileName, encoding) {
+    assert.equal(encoding, 'utf8');
+    assert.equal(true, Object.keys(files).includes(fileName));
+    return files[fileName];
+  };
+};
+
 const mockConsole = function (input, expectedArgs) {
   let index = 0;
   return function (arg) {
-    assert.equal(arg, expectedArgs[index])
+    assert.equal(arg, expectedArgs[index]);
     input.push(arg);
     index++;
   };
@@ -17,10 +25,11 @@ describe.only('printHead', () => {
     const outExpected = ['hello'];
     const printOut = mockConsole(outInput, outExpected);
     const printErr = mockConsole(errInput, []);
-    const content = [{ fileName: './a.txt', extractedContent: 'hello', fileExist: true }];
-    assert.deepStrictEqual(printHead(printOut, printErr, content), 0);
+    const mockedReadFile = mockReadFile({ 'a.txt': 'hello' })
+    assert.deepStrictEqual(printHead(printOut, printErr, mockedReadFile, 'a.txt'), 0);
     assert.deepStrictEqual(outInput, outExpected);
   });
+
   it('Should print content of given file and error of bad file', () => {
     const errInput = [];
     const outInput = [];
@@ -28,10 +37,8 @@ describe.only('printHead', () => {
     const outExpected = ['==> a.txt <==\nhello'];
     const printOut = mockConsole(outInput, outExpected);
     const printErr = mockConsole(errInput, errExpected);
-    const file1 = { fileName: 'a.txt', extractedContent: 'hello', fileExist: true }
-    const file2 = { fileName: 'a', fileExist: false }
-    const content = [file1, file2];
-    assert.deepStrictEqual(printHead(printOut, printErr, content), 1);
+    const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
+    assert.deepStrictEqual(printHead(printOut, printErr, mockedReadFile, 'a.txt', 'a'), 1);
     assert.deepStrictEqual(outInput, outExpected);
     assert.deepStrictEqual(errExpected, errInput);
   });

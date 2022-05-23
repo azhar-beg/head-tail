@@ -18,15 +18,15 @@ const print = function (stdOut, stdErr, fileStatus, separator) {
 
 const oneFile = content => content.length <= 1;
 
-const printHead = function (stdOut, stdErr, filesContent) {
+const printHead = function (stdOut, stdErr, fileReader, ...args) {
+  const filesContent = headMain(fileReader, ...args);
   const exit = { code: 0 };
-  const printer = print.bind(exit, stdOut, stdErr);
-
   if (oneFile(filesContent) && filesContent[0].fileExist) {
     stdOut(filesContent[0].extractedContent);
     return exit.code;
   }
 
+  const printer = print.bind(exit, stdOut, stdErr);
   let separator = '';
   filesContent.forEach(content => {
     printer(content, separator);
