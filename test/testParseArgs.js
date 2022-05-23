@@ -52,7 +52,7 @@ describe('parseArgs', () => {
 
   it('should throw error for invalid count', () => {
     assert.throws(() => parseArgs(['-c', './a.txt']), {
-      message: 'head: illegal line count -- ./a.txt'
+      message: 'head: illegal byte count -- ./a.txt'
     });
   });
 
@@ -66,9 +66,17 @@ describe('parseArgs', () => {
 
 describe('getOption', () => {
   it('Should return -n as default, when number is provided', () => {
-    const iterator = createIterator(['-1', 'a.txt']);
+    const iterator = createIterator(['-n', '1', 'a.txt']);
     const subArgs = { option: '-n', count: 1 };
     let option;
     assert.deepStrictEqual(getOption(iterator, option), subArgs);
+  });
+
+  it('should throw an error for invalid option', () => {
+    const iterator = createIterator(['-w', '1']);
+    const message = 'head: illegal option --w';
+    const usage = 'usage: head[-n lines | -c bytes][file ...]';
+    const expected = { message: message + '\n' + usage };
+    assert.throws(() => getOption(iterator), expected);
   });
 });
