@@ -1,10 +1,12 @@
 **TODO:**
 - [ ] validate args returned from structureArgs
+- [ ] Made tail work for multiple file content;
 **MAYBE:**
 - [ ] Consider separating test from `testHeadLib`
 - [ ] Consider better name for `headMultipleFile`.
 
 **DONE:**
+- [x] Made tail work only for one file content.
 - [x] Create separate directory structure for head and tail in src and test
 - [x] Document tail contract.
 - [x] Refactor printHead function
