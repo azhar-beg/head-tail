@@ -25,8 +25,9 @@ describe('printHead', () => {
     const outExpected = ['hello'];
     const printOut = mockConsole(outInput, outExpected);
     const printErr = mockConsole(errInput, []);
-    const mockedReadFile = mockReadFile({ 'a.txt': 'hello' })
-    assert.deepStrictEqual(printHead(printOut, printErr, mockedReadFile, 'a.txt'), 0);
+    const print = { stdOut: printOut, stdErr: printErr };
+    const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
+    assert.deepStrictEqual(printHead(print, mockedReadFile, 'a.txt'), 0);
     assert.deepStrictEqual(outInput, outExpected);
   });
 
@@ -37,8 +38,9 @@ describe('printHead', () => {
     const outExpected = ['==> a.txt <==\nhello'];
     const printOut = mockConsole(outInput, outExpected);
     const printErr = mockConsole(errInput, errExpected);
+    const print = { stdOut: printOut, stdErr: printErr };
     const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
-    assert.deepStrictEqual(printHead(printOut, printErr, mockedReadFile, 'a.txt', 'a'), 1);
+    assert.deepStrictEqual(printHead(print, mockedReadFile, 'a.txt', 'a'), 1);
     assert.deepStrictEqual(outInput, outExpected);
     assert.deepStrictEqual(errExpected, errInput);
   });
@@ -50,8 +52,9 @@ describe('printHead', () => {
     const outExpected = [];
     const printOut = mockConsole(outInput, outExpected);
     const printErr = mockConsole(errInput, errExpected);
+    const print = { stdOut: printOut, stdErr: printErr };
     const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
-    assert.deepStrictEqual(printHead(printOut, printErr, mockedReadFile, 'a'), 1);
+    assert.deepStrictEqual(printHead(print, mockedReadFile, 'a'), 1);
     assert.deepStrictEqual(outInput, outExpected);
     assert.deepStrictEqual(errExpected, errInput);
   });

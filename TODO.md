@@ -18,6 +18,7 @@
 - [ ] Consider better name for `headMultipleFile`.
 
 **DONE:**
+- [x] refactor head and printer
 - [x] Changed names of object keys and variables.
 - [x] Create separate directory structure for head and tail in src and test
 - [x] Document tail contract.

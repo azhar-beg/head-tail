@@ -6,33 +6,31 @@ const formatter = (content, fileName, separator) => {
   return `${separator}==> ${fileName} <==\n${content}`;
 };
 
-const print = function (stdOut, stdErr, fileStatus, separator) {
+const printer = function (print, fileStatus, separator) {
   const { content, fileExist, fileName } = fileStatus;
   if (fileExist) {
-    stdOut(formatter(content, fileName, separator));
+    print.stdOut(formatter(content, fileName, separator));
     return;
   }
-  stdErr(errorMsg(fileName));
-  this.code = 1;
+  print.stdErr(errorMsg(fileName));
 };
 
 const oneFile = content => content.length <= 1;
 
-const printHead = function (stdOut, stdErr, fileReader, ...args) {
-  const filesContent = headMain(fileReader, ...args);
-  const exit = { code: 0 };
-  if (oneFile(filesContent) && filesContent[0].fileExist) {
-    stdOut(filesContent[0].content);
-    return exit.code;
+const printHead = function (print, fileReader, ...args) {
+  const headContent = headMain(fileReader, ...args);
+  if (oneFile(headContent) && headContent[0].fileExist) {
+    print.stdOut(headContent[0].content);
+    return 0;
   }
 
-  const printer = print.bind(exit, stdOut, stdErr);
   let separator = '';
-  filesContent.forEach(content => {
-    printer(content, separator);
+  headContent.forEach(content => {
+    printer(print, content, separator);
     separator = '\n';
   });
-  return exit.code;
+
+  return headContent.every(file => file.fileExist) ? 0 : 1;
 };
 
 exports.printHead = printHead;

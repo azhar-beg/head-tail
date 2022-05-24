@@ -19,7 +19,7 @@ const getValue = function (argsIterator, option) {
   return value;
 };
 
-const getOptions = function (argsIterator) {
+const parseOption = function (argsIterator) {
   assertNoArg(argsIterator.restOfArgs());
   let options;
   while (isOption(argsIterator.currentArg()) && argsIterator.currentArg()) {
@@ -35,11 +35,11 @@ const getOptions = function (argsIterator) {
 const parseArgs = function (commandLineArgs) {
   const args = splitArgs(commandLineArgs);
   const argsIterator = createIterator(args);
-  let options = getOptions(argsIterator);
-  options = options || { option: '-n', count: 10 };
+  let parsedOption = parseOption(argsIterator);
+  parsedOption = parsedOption || { option: '-n', count: 10 };
   const fileNames = argsIterator.restOfArgs();
-  return { fileNames, options };
+  return { fileNames, options: parsedOption };
 };
 
 exports.parseArgs = parseArgs;
-exports.getOptions = getOptions;
+exports.parseOption = parseOption;

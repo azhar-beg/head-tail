@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { getOptions, parseArgs } = require('../../src/head/parseArgs.js');
+const { parseOption, parseArgs } = require('../../src/head/parseArgs.js');
 const { createIterator } = require('../../src/head/createIterator.js');
 
 describe('parseArgs', () => {
@@ -64,12 +64,12 @@ describe('parseArgs', () => {
   });
 });
 
-describe('getOptions', () => {
+describe('parseOption', () => {
   it('Should return -n as default, when number is provided', () => {
     const iterator = createIterator(['-n', '1', 'a.txt']);
     const options = { option: '-n', count: 1 };
     let option;
-    assert.deepStrictEqual(getOptions(iterator, option), options);
+    assert.deepStrictEqual(parseOption(iterator, option), options);
   });
 
   it('should throw an error for invalid option', () => {
@@ -77,7 +77,7 @@ describe('getOptions', () => {
     const message = 'head: illegal option -- w';
     const usage = 'usage: head[-n lines | -c bytes][file ...]';
     const expected = { message: message + '\n' + usage };
-    assert.throws(() => getOptions(iterator), expected);
+    assert.throws(() => parseOption(iterator), expected);
   });
 
   it('should throw an error for no option argument', () => {
@@ -85,12 +85,12 @@ describe('getOptions', () => {
     const message = 'head: option requires an argument -- n';
     const usage = 'usage: head[-n lines | -c bytes][file ...]';
     const expected = { message: message + '\n' + usage };
-    assert.throws(() => getOptions(iterator), expected);
+    assert.throws(() => parseOption(iterator), expected);
   });
 
   it('should throw error for no arguments', () => {
     const iterator = createIterator([]);
     const expected = { message: 'usage: head[-n lines | -c bytes][file ...]' };
-    assert.throws(() => getOptions(iterator), expected);
+    assert.throws(() => parseOption(iterator), expected);
   });
 });
