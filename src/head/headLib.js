@@ -9,10 +9,10 @@ const head = function (fileContent, { count }, separator) {
   return joinContent(content, separator);
 };
 
-const structureHead = function (fileStatus, options, sep) {
+const structureHead = function (fileStatus, options, separator) {
   const { fileName, fileContent, fileExist } = fileStatus;
   if (fileExist) {
-    const content = head(fileContent, options, sep);
+    const content = head(fileContent, options, separator);
     return { fileName, content, fileExist };
   }
   return { fileName, fileExist };

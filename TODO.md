@@ -1,11 +1,11 @@
 **TAIL**
 **TODO**
-- [ ] Made tail work for multiple file content;
-
+- [ ] Make tail work from command line with valid options.
 
 
 **DONE**
 - [x] Made tail work only for one file content.
+- [x] Made tail work for multiple file content;
 
 
 
