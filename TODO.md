@@ -1,9 +1,9 @@
 **TAIL**
 **TODO**
 - [ ] Make tail work from command line with valid options.
-
-
+- [ ] Male tail work for '-n'
 **DONE**
+- [x] Make tail work for single file without any option.
 - [x] Made tail work only for one file content.
 - [x] Made tail work for multiple file content;
 
