@@ -1,4 +1,4 @@
-const { createIterator } = require('../src/createIterator');
+const { createIterator } = require('../../src/head/createIterator.js');
 const assert = require('assert');
 
 describe('createIterator', () => {

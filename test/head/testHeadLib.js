@@ -1,6 +1,13 @@
 const assert = require('assert');
-const { readFile, headMultipleFiles, extractContent, head } = require('../src/headLib.js');
-const { mockReadFile } = require('./testHeadMain');
+const { readFile, headMultipleFiles, extractContent, head } = require('../../src/head/headLib.js');
+
+const mockReadFile = (files) => {
+  return function (fileName, encoding) {
+    assert.equal(encoding, 'utf8');
+    assert.equal(true, Object.keys(files).includes(fileName));
+    return files[fileName];
+  };
+};
 
 describe('extractContent', () => {
   it('Should return given line for one line', () => {

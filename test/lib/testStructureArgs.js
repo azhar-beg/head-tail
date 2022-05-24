@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { structureArgs } = require('../src/structureArgs.js');
+const { structureArgs } = require('../../src/lib/structureArgs.js');
 
 describe('structureArgs', () => {
   it('should return give array', () => {

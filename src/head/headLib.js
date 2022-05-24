@@ -1,4 +1,4 @@
-const { splitContent, joinContent } = require('./stringUtils.js');
+const { splitContent, joinContent } = require('../lib/stringUtils.js');
 const { parseArgs } = require('./parseArgs.js');
 
 const extractContent = (content, count) => content.slice(0, count);

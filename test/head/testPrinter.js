@@ -1,4 +1,4 @@
-const { printHead } = require('../src/printer.js');
+const { printHead } = require('../../src/head/printer.js');
 const assert = require('assert');
 
 const mockReadFile = (files) => {
@@ -18,7 +18,7 @@ const mockConsole = function (input, expectedArgs) {
   };
 };
 
-describe.only('printHead', () => {
+describe('printHead', () => {
   it('Should print content of given file', () => {
     const errInput = [];
     const outInput = [];

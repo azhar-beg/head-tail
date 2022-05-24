@@ -1,6 +1,6 @@
 const assert = require('assert');
-const { getOptions, parseArgs } = require('../src/parseArgs.js');
-const { createIterator } = require('../src/createIterator.js');
+const { getOptions, parseArgs } = require('../../src/head/parseArgs.js');
+const { createIterator } = require('../../src/head/createIterator.js');
 
 describe('parseArgs', () => {
   it('should parse args only for file name.', () => {

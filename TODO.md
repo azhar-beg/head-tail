@@ -5,6 +5,8 @@
 - [ ] Consider better name for `headMultipleFile`.
 
 **DONE:**
+- [x] Create separate directory structure for head and tail in src and test
+- [x] Document tail contract.
 - [x] Refactor printHead function
 - [x] separate validate function
 - [x] extract error throw in separate function;

@@ -1,4 +1,4 @@
-const { structureArgs } = require('./structureArgs.js');
+const { structureArgs } = require('../lib/structureArgs.js');
 const { createIterator } = require('./createIterator.js');
 const { assertCountValidity,
   assertOnlyOne,
