@@ -1,4 +1,4 @@
-const { printHead } = require('./src/printer.js');
+const { printHead } = require('./src/head/printer.js');
 const fs = require('fs');
 
 const main = () => {

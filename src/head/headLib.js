@@ -3,24 +3,24 @@ const { parseArgs } = require('./parseArgs.js');
 
 const extractContent = (content, count) => content.slice(0, count);
 
-const head = function (content, { option, count }) {
-  const separator = option === '-c' ? '' : '\n';
+const head = function (content, { count }, separator) {
   const splittedContent = splitContent(content, separator);
   const extractedContent = extractContent(splittedContent, count);
   return joinContent(extractedContent, separator);
 };
 
-const structureHead = function ({ fileName, content, fileExist }, subArgs) {
+const structureHead = function ({ fileName, content, fileExist }, subArgs, sep) {
   if (fileExist) {
-    const extractedContent = head(content, subArgs);
+    const extractedContent = head(content, subArgs, sep);
     return { fileName, extractedContent, fileExist };
   }
   return { fileName, fileExist };
 };
 
 const headMultipleFiles = function (filesContent, subArgs) {
+  const separator = subArgs.option === '-c' ? '' : '\n';
   const headContent = filesContent.map(fileContent => structureHead(
-    fileContent, subArgs));
+    fileContent, subArgs, separator));
   return headContent;
 };
 
