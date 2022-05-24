@@ -1,45 +1,46 @@
 const { splitContent, joinContent } = require('../lib/stringUtils.js');
 const { parseArgs } = require('./parseArgs.js');
 
-const extractContent = (content, count) => content.slice(0, count);
+const extractContent = (fileContent, count) => fileContent.slice(0, count);
 
-const head = function (content, { count }, separator) {
-  const splittedContent = splitContent(content, separator);
-  const extractedContent = extractContent(splittedContent, count);
-  return joinContent(extractedContent, separator);
+const head = function (fileContent, { count }, separator) {
+  const splittedContent = splitContent(fileContent, separator);
+  const content = extractContent(splittedContent, count);
+  return joinContent(content, separator);
 };
 
-const structureHead = function ({ fileName, content, fileExist }, subArgs, sep) {
+const structureHead = function (fileStatus, options, sep) {
+  const { fileName, fileContent, fileExist } = fileStatus;
   if (fileExist) {
-    const extractedContent = head(content, subArgs, sep);
-    return { fileName, extractedContent, fileExist };
+    const content = head(fileContent, options, sep);
+    return { fileName, content, fileExist };
   }
   return { fileName, fileExist };
 };
 
-const headMultipleFiles = function (filesContent, subArgs) {
-  const separator = subArgs.option === '-c' ? '' : '\n';
-  const headContent = filesContent.map(fileContent => structureHead(
-    fileContent, subArgs, separator));
+const headMultipleFiles = function (filesStatus, options) {
+  const separator = options.option === '-c' ? '' : '\n';
+  const headContent = filesStatus.map(fileStatus => structureHead(
+    fileStatus, options, separator));
   return headContent;
 };
 
 const readFile = function (fileReader, fileName) {
   try {
-    const content = fileReader(fileName, 'utf8');
-    return { fileName, content, fileExist: true };
+    const fileContent = fileReader(fileName, 'utf8');
+    return { fileName, fileContent, fileExist: true };
   } catch (error) {
     return { fileName, fileExist: false };
   }
 };
 
 const headMain = function (fileReader, ...args) {
-  const { fileNames, subArgs } = parseArgs(args);
-  const filesContent = [];
+  const { fileNames, options } = parseArgs(args);
+  const filesStatus = [];
   for (let index = 0; index < fileNames.length; index++) {
-    filesContent.push(readFile(fileReader, fileNames[index]));
+    filesStatus.push(readFile(fileReader, fileNames[index]));
   }
-  return headMultipleFiles(filesContent, subArgs);
+  return headMultipleFiles(filesStatus, options);
 };
 
 exports.extractContent = extractContent;

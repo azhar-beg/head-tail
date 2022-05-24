@@ -42,4 +42,17 @@ describe('printHead', () => {
     assert.deepStrictEqual(outInput, outExpected);
     assert.deepStrictEqual(errExpected, errInput);
   });
+
+  it('Should print single error with console.error', () => {
+    const errInput = [];
+    const outInput = [];
+    const errExpected = ['head: a: No such file or directory'];
+    const outExpected = [];
+    const printOut = mockConsole(outInput, outExpected);
+    const printErr = mockConsole(errInput, errExpected);
+    const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
+    assert.deepStrictEqual(printHead(printOut, printErr, mockedReadFile, 'a'), 1);
+    assert.deepStrictEqual(outInput, outExpected);
+    assert.deepStrictEqual(errExpected, errInput);
+  });
 });

@@ -64,25 +64,25 @@ describe('head', () => {
 describe('headMultipleFiles', () => {
   it('should head multiple file content', () => {
     const expected = [{
-      fileName: 'a.txt', extractedContent: 'hello',
+      fileName: 'a.txt', content: 'hello',
       fileExist: true
     },
-    { fileName: 'b.txt', extractedContent: 'bye', fileExist: true }
+    { fileName: 'b.txt', content: 'bye', fileExist: true }
     ];
-    const file1 = { fileName: 'a.txt', content: 'hello', fileExist: true };
-    const file2 = { fileName: 'b.txt', content: 'bye', fileExist: true };
+    const file1 = { fileName: 'a.txt', fileContent: 'hello', fileExist: true };
+    const file2 = { fileName: 'b.txt', fileContent: 'bye', fileExist: true };
     const filesContent = [file1, file2];
     const subArgs = { option: '-n', count: '10' };
     assert.deepStrictEqual(headMultipleFiles(filesContent, subArgs), expected);
   });
 
   it('should head content of single file', () => {
-    const content = { fileName: 'b.txt', content: 'bye', fileExist: true };
+    const content = { fileName: 'b.txt', fileContent: 'bye', fileExist: true };
     const expected = [{
-      fileName: 'b.txt', extractedContent: 'bye',
+      fileName: 'b.txt', content: 'bye',
       fileExist: true
     }];
-    const subArgs = { option: '-n', count: '10' }
+    const subArgs = { option: '-n', count: '10' };
     assert.deepStrictEqual(headMultipleFiles([content], subArgs), expected);
   });
 });
@@ -90,7 +90,7 @@ describe('headMultipleFiles', () => {
 describe('readFile', () => {
   it('Should read a file', () => {
     const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
-    const expected = { fileName: 'a.txt', fileExist: true, content: 'hello' };
+    const expected = { fileName: 'a.txt', fileExist: true, fileContent: 'hello' };
     assert.deepStrictEqual(readFile(mockedReadFile, 'a.txt'), expected);
   });
 });

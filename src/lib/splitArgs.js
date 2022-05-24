@@ -1,4 +1,4 @@
-const structureArgs = function (args) {
+const splitArgs = function (args) {
   return args.flatMap(arg => {
     if (/^-\d+$/.test(arg)) {
       return ['-n', arg.slice(1)];
@@ -7,4 +7,4 @@ const structureArgs = function (args) {
   }).filter(arg => arg.length);
 };
 
-exports.structureArgs = structureArgs;
+exports.splitArgs = splitArgs;

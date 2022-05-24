@@ -13,7 +13,7 @@ describe('headMain', () => {
   it('Should display the lines of given file', () => {
     const mockedReadFile = mockReadFile({ './a.txt': 'hello\nhi' });
     const expected = [{
-      fileName: './a.txt', extractedContent: 'hello\nhi',
+      fileName: './a.txt', content: 'hello\nhi',
       fileExist: true
     }];
     assert.deepStrictEqual(headMain(mockedReadFile, './a.txt'), expected);
@@ -21,7 +21,7 @@ describe('headMain', () => {
   it('should display 1 line of file with 2 lines', () => {
     const mockedReadFile = mockReadFile({ './a.txt': 'hello\nhi' });
     const expected = [{
-      fileName: './a.txt', extractedContent: 'hello',
+      fileName: './a.txt', content: 'hello',
       fileExist: true
     }];
     const actual = headMain(mockedReadFile, '-n', '1', './a.txt');
@@ -31,7 +31,7 @@ describe('headMain', () => {
   it('should display a character of a line', () => {
     const mockedReadFile = mockReadFile({ './a.txt': 'hello\nhi' });
     const expected = [{
-      fileName: './a.txt', extractedContent: 'h',
+      fileName: './a.txt', content: 'h',
       fileExist: true
     }];
     const actual = headMain(mockedReadFile, '-c', '1', './a.txt');
@@ -42,10 +42,10 @@ describe('headMain', () => {
     const mockedReadFile = mockReadFile({ 'a.txt': 'hello', 'b.txt': 'hi' });
     const actual = headMain(mockedReadFile, 'a.txt', 'b.txt');
     const expected = [{
-      fileName: 'a.txt', extractedContent: 'hello',
+      fileName: 'a.txt', content: 'hello',
       fileExist: true
     }, {
-      fileName: 'b.txt', extractedContent: 'hi',
+      fileName: 'b.txt', content: 'hi',
       fileExist: true
     }];
 
@@ -68,7 +68,7 @@ describe('headMain', () => {
     const expected = [{
       fileExist: true,
       fileName: 'b.txt',
-      extractedContent: 'hi'
+      content: 'hi'
     }, {
       fileExist: false,
       fileName: 'c.txt',

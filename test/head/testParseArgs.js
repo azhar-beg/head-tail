@@ -4,36 +4,36 @@ const { createIterator } = require('../../src/head/createIterator.js');
 
 describe('parseArgs', () => {
   it('should parse args only for file name.', () => {
-    const subArgs = { option: '-n', count: 10 };
-    const parsedArgs = { fileNames: ['./a.txt'], subArgs: subArgs };
+    const options = { option: '-n', count: 10 };
+    const parsedArgs = { fileNames: ['./a.txt'], options: options };
     assert.deepStrictEqual(parseArgs(['./a.txt']), parsedArgs);
   });
 
   it('should parse args for filename and number option', () => {
     const args = ['-n', '2', './a.txt'];
-    const subArgs = { option: '-n', count: 2 };
-    const parsedArgs = { fileNames: ['./a.txt'], subArgs: subArgs };
+    const options = { option: '-n', count: 2 };
+    const parsedArgs = { fileNames: ['./a.txt'], options: options };
     assert.deepStrictEqual(parseArgs(args), parsedArgs);
   });
 
   it('should parse args for character option', () => {
     const args = ['-c', '2', './a.txt'];
-    const subArgs = { option: '-c', count: 2 };
-    const parsedArgs = { fileNames: ['./a.txt'], subArgs: subArgs };
+    const options = { option: '-c', count: 2 };
+    const parsedArgs = { fileNames: ['./a.txt'], options: options };
     assert.deepStrictEqual(parseArgs(args), parsedArgs);
   });
 
   it('should return multiple file names', () => {
     const args = ['./a.txt', './b.txt'];
-    const subArgs = { option: '-n', count: 10 };
-    const parsedArgs = { fileNames: ['./a.txt', './b.txt'], subArgs: subArgs };
+    const options = { option: '-n', count: 10 };
+    const parsedArgs = { fileNames: ['./a.txt', './b.txt'], options: options };
     assert.deepStrictEqual(parseArgs(args), parsedArgs);
   });
 
   it('should return last option', () => {
     const args = ['-c', '1', '-c', '4', './a.txt'];
-    const subArgs = { option: '-c', count: 4 };
-    const parsedArgs = { fileNames: ['./a.txt'], subArgs: subArgs };
+    const options = { option: '-c', count: 4 };
+    const parsedArgs = { fileNames: ['./a.txt'], options: options };
     assert.deepStrictEqual(parseArgs(args), parsedArgs);
   });
 
@@ -45,8 +45,8 @@ describe('parseArgs', () => {
 
   it('Should separate option and count', () => {
     const args = ['-c1', './a.txt'];
-    const subArgs = { option: '-c', count: 1 };
-    const parsedArgs = { fileNames: ['./a.txt'], subArgs: subArgs };
+    const options = { option: '-c', count: 1 };
+    const parsedArgs = { fileNames: ['./a.txt'], options: options };
     assert.deepStrictEqual(parseArgs(args), parsedArgs);
   });
 
@@ -58,8 +58,8 @@ describe('parseArgs', () => {
 
   it('Should return -n as default option when only number is provided', () => {
     const args = ['-1', './a.txt'];
-    const subArgs = { option: '-n', count: 1 };
-    const parsedArgs = { fileNames: ['./a.txt'], subArgs: subArgs };
+    const options = { option: '-n', count: 1 };
+    const parsedArgs = { fileNames: ['./a.txt'], options: options };
     assert.deepStrictEqual(parseArgs(args), parsedArgs);
   });
 });
@@ -67,9 +67,9 @@ describe('parseArgs', () => {
 describe('getOptions', () => {
   it('Should return -n as default, when number is provided', () => {
     const iterator = createIterator(['-n', '1', 'a.txt']);
-    const subArgs = { option: '-n', count: 1 };
+    const options = { option: '-n', count: 1 };
     let option;
-    assert.deepStrictEqual(getOptions(iterator, option), subArgs);
+    assert.deepStrictEqual(getOptions(iterator, option), options);
   });
 
   it('should throw an error for invalid option', () => {

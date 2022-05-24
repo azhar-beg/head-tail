@@ -1,4 +1,4 @@
-const { structureArgs } = require('../lib/structureArgs.js');
+const { splitArgs } = require('../lib/splitArgs.js');
 const { createIterator } = require('./createIterator.js');
 const { assertCountValidity,
   assertOnlyOne,
@@ -21,24 +21,24 @@ const getValue = function (argsIterator, option) {
 
 const getOptions = function (argsIterator) {
   assertNoArg(argsIterator.restOfArgs());
-  let subArgs;
+  let options;
   while (isOption(argsIterator.currentArg()) && argsIterator.currentArg()) {
     const option = getOption(argsIterator);
     const optionVal = getValue(argsIterator, option);
-    assertOnlyOne(subArgs, { option, optionVal });
-    subArgs = { option, count: +optionVal };
+    assertOnlyOne(options, { option, optionVal });
+    options = { option, count: +optionVal };
     argsIterator.nextArg();
   }
-  return subArgs;
+  return options;
 };
 
-const parseArgs = function (args) {
-  const structuredArgs = structureArgs(args);
-  const argsIterator = createIterator(structuredArgs);
-  let subArgs = getOptions(argsIterator);
-  subArgs = subArgs || { option: '-n', count: 10 };
+const parseArgs = function (commandLineArgs) {
+  const args = splitArgs(commandLineArgs);
+  const argsIterator = createIterator(args);
+  let options = getOptions(argsIterator);
+  options = options || { option: '-n', count: 10 };
   const fileNames = argsIterator.restOfArgs();
-  return { fileNames, subArgs };
+  return { fileNames, options };
 };
 
 exports.parseArgs = parseArgs;
