@@ -1,10 +1,12 @@
 **TAIL**
 **TODO**
-- [ ] Make parse work with -n and -c
 - [ ] Make generic parse args
 - [ ] Make tail work from command line with valid options.
 - [ ] Make tail work for '-n'
+- [ ] Made printer for tail
+
 **DONE**
+- [x] Make parse work with -n and -c
 - [x] Make tail work for single file without any option.
 - [x] Made tail work only for one file content.
 - [x] Made tail work for multiple file content;

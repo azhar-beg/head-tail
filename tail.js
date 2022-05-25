@@ -1,10 +1,11 @@
-// console.log('usage: tail [-c # | -n #] [file ...]');
 const fs = require('fs');
-const { tailMain } = require('./src/tail/tailLib.js');
+const { printTail } = require('./src/tail/printer.js');
 
 const main = () => {
   try {
-    console.log(tailMain(fs.readFileSync, ...process.argv.slice(2))[0].content);
+    const print = { stdOut: console.log, stdErr: console.error };
+    const code = printTail(print, fs.readFileSync, ...process.argv.slice(2));
+    process.exit(code);
   } catch (error) {
     console.error(error.message);
     process.exit(1);

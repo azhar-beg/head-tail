@@ -1,6 +1,5 @@
 const { printHead } = require('./src/head/printer.js');
 const fs = require('fs');
-const console = require('console');
 
 const main = () => {
   const print = { stdOut: console.log, stdErr: console.error };
