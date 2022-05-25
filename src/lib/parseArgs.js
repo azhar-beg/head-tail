@@ -8,9 +8,8 @@ const countParser = function (count) {
   return { flag: this.flag, count: +count };
 };
 
-
-const { assertCountValidity,
-  assertOnlyOne,
+const {
+  illegalCombination,
   assertOptionValidity,
   assertNoArg } = require('./validate.js');
 
@@ -21,22 +20,22 @@ const last = function (option1, option2) {
 
 const isOption = arg => arg.startsWith('-');
 
-const parseOption = function (argsIterator, parsingDetails) {
-  assertNoArg(argsIterator.restOfArgs());
+const parseOption = function (iterableArgs, parsingDetails) {
   const allOptions = [];
-  while (isOption(argsIterator.currentArg()) && argsIterator.currentArg()) {
-    const flag = argsIterator.currentArg();
+  while (iterableArgs.currentArg() && isOption(iterableArgs.currentArg())) {
+    const flag = iterableArgs.currentArg();
     const detail = parsingDetails.find(detail => detail.flag === flag);
     assertOptionValidity(flag);
-    const option = detail.parser(argsIterator.nextArg());
+    const option = detail.parser(iterableArgs.nextArg());
     allOptions.push(option);
-    argsIterator.nextArg();
+    iterableArgs.nextArg();
   }
   if (allOptions.length < 2) {
     return allOptions[0];
   }
-  const option = allOptions.reduce(last);
-  return option;
+  throw illegalCombination;
+  // const option = allOptions.reduce(last);
+  // return option;
 };
 
 const parseArgs = function (commandLineArgs, parsingDetails, defaultOption) {
@@ -51,4 +50,3 @@ const parseArgs = function (commandLineArgs, parsingDetails, defaultOption) {
 
 exports.parseArgs = parseArgs;
 exports.countParser = countParser;
-// exports.parseOption = parseOption;

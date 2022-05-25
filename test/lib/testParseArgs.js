@@ -15,8 +15,8 @@ const allOptions = [
     validate: assertCountValidity
   },
 ];
-describe.only('parseArgs', () => {
-  it.only('should parse args only for file name.', () => {
+describe('parseArgs', () => {
+  it('should parse args only for file name.', () => {
     const options = { flag: '-n', count: 10 };
     const parsedArgs = { files: ['./a.txt'], option: options };
     const actual = parseArgs(['./a.txt'], allOptions, options);
@@ -49,7 +49,7 @@ describe.only('parseArgs', () => {
     assert.deepStrictEqual(parseArgs(args, allOptions, defaultOption), parsedArgs);
   });
 
-  it.only('should return last option', () => {
+  it('should return last option', () => {
     const args = ['-c', '1', '-c', '4', './a.txt'];
     const defaultOption = { flag: '-n', count: 10 };
     const option = { flag: '-c', count: 4 };
@@ -57,7 +57,7 @@ describe.only('parseArgs', () => {
     assert.deepStrictEqual(parseArgs(args, allOptions, defaultOption), parsedArgs);
   });
 
-  it.only('Should throw error for -c and -n together', () => {
+  it('Should throw error for -c and -n together', () => {
     const defaultOption = { flag: '-n', count: 10 };
     const actual = () => parseArgs(['-c', '4', '-n', '5', './a.txt'], allOptions, defaultOption);
     assert.throws(actual, {
@@ -66,7 +66,7 @@ describe.only('parseArgs', () => {
     });
   });
 
-  it.only('Should separate option and count', () => {
+  it('Should separate option and count', () => {
     const args = ['-c1', './a.txt'];
     const defaultOption = { flag: '-n', count: 10 };
     const option = { flag: '-c', count: 1 };
@@ -74,14 +74,14 @@ describe.only('parseArgs', () => {
     assert.deepStrictEqual(parseArgs(args, allOptions, defaultOption), parsedArgs);
   });
 
-  it.only('should throw error for invalid count', () => {
+  it('should throw error for invalid count', () => {
     const defaultOption = { flag: '-n', count: 10 };
     assert.throws(() => parseArgs(['-c', './a.txt'], allOptions, defaultOption), {
       message: 'tail: illegal offset -- ./a.txt'
     });
   });
 
-  it.only('Should return -n as default option when only number is provided', () => {
+  it('Should return -n as default option when only number is provided', () => {
     const args = ['-1', './a.txt'];
     const option = { flag: '-n', count: 1 };
     const defaultOption = { flag: '-n', count: 10 };

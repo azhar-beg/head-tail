@@ -67,3 +67,4 @@ exports.assertCountValidity = assertCountValidity;
 exports.assertOnlyOne = assertOnlyOne;
 exports.assertOptionValidity = assertOptionValidity;
 exports.assertNoArg = assertNoArg;
+exports.illegalCombination = illegalCombination;

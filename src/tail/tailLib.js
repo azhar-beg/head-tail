@@ -1,8 +1,9 @@
 const { splitContent, joinContent } = require('../../src/lib/stringUtils.js');
+const { parseTail } = require('./parseTail');
 
 const extractContent = (content, count) => content.slice(-count);
 
-const getSeparator = ({ option }) => option === '-c' ? '' : '\n';
+const getSeparator = ({ flag }) => flag === '-c' ? '' : '\n';
 
 const tail = function (fileContent, { count }, separator) {
   const content = splitContent(fileContent, separator);
@@ -27,10 +28,22 @@ const tailMultipleFiles = function (filesStatus, options) {
   return headContent;
 };
 
-const tailMain = function (fileReader, fileName) {
-  const fileContent = fileReader(fileName, 'utf8');
-  const fileStatus = [{ fileName, fileContent, fileExist: true }];
-  const content = tailMultipleFiles(fileStatus, { option: '-n', count: 10 }, '\n');
+const readFile = function (fileReader, fileName) {
+  try {
+    const fileContent = fileReader(fileName, 'utf8');
+    return { fileName, fileContent, fileExist: true };
+  } catch (error) {
+    return { fileName, fileExist: false };
+  }
+};
+
+const tailMain = function (fileReader, ...args) {
+  const { files, option } = parseTail(args);
+  const filesStatus = [];
+  for (let index = 0; index < files.length; index++) {
+    filesStatus.push(readFile(fileReader, files[index]));
+  }
+  const content = tailMultipleFiles(filesStatus, option);
   return content;
 };
 

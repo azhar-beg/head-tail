@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { tailMain } = require('../../src/tail/tailLib.js');
+const { tailMain, tail } = require('../../src/tail/tailLib.js');
 
 const mockReadFile = (files) => {
   return function (fileName, encoding) {
@@ -10,12 +10,25 @@ const mockReadFile = (files) => {
 };
 
 describe('tailMain', () => {
-  it('Should display the lines of given file', () => {
+  it('Should d return content of single file', () => {
     const mockedReadFile = mockReadFile({ './a.txt': 'hello\nhi' });
     const expected = [{
       fileName: './a.txt', content: 'hello\nhi',
       fileExist: true
     }];
     assert.deepStrictEqual(tailMain(mockedReadFile, './a.txt'), expected);
+  });
+
+  it('should return content if multiple files', () => {
+    const mockedReadFile = mockReadFile({ 'a.txt': 'hello', 'b.txt': 'hi' });
+    const actual = tailMain(mockedReadFile, 'a.txt', 'b.txt');
+    const expected = [{
+      fileName: 'a.txt', content: 'hello',
+      fileExist: true
+    }, {
+      fileName: 'b.txt', content: 'hi',
+      fileExist: true
+    }];
+    assert.deepStrictEqual(actual, expected);
   });
 });

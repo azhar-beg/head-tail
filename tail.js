@@ -3,7 +3,12 @@ const fs = require('fs');
 const { tailMain } = require('./src/tail/tailLib.js');
 
 const main = () => {
-  console.log(tailMain(fs.readFileSync, process.argv[2])[0].content);
+  try {
+    console.log(tailMain(fs.readFileSync, ...process.argv.slice(2))[0].content);
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
 };
 
 main();
