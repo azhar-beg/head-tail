@@ -4,9 +4,9 @@ const extractContent = (content, count) => content.slice(-count);
 
 const getSeparator = ({ option }) => option === '-c' ? '' : '\n';
 
-const tail = function (content, { count }, separator) {
-  const splittedContent = splitContent(content, separator);
-  const extractedContent = extractContent(splittedContent, count);
+const tail = function (fileContent, { count }, separator) {
+  const content = splitContent(fileContent, separator);
+  const extractedContent = extractContent(content, count);
   return joinContent(extractedContent, separator);
 };
 

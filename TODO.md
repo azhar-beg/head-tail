@@ -1,5 +1,6 @@
 **TAIL**
 **TODO**
+- [ ] Make generic parse args
 - [ ] Make tail work from command line with valid options.
 - [ ] Male tail work for '-n'
 **DONE**

@@ -4,8 +4,8 @@ const { parseArgs } = require('./parseArgs.js');
 const extractContent = (fileContent, count) => fileContent.slice(0, count);
 
 const head = function (fileContent, { count }, separator) {
-  const splittedContent = splitContent(fileContent, separator);
-  const content = extractContent(splittedContent, count);
+  let content = splitContent(fileContent, separator);
+  content = extractContent(content, count);
   return joinContent(content, separator);
 };
 
