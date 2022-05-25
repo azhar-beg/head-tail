@@ -2,7 +2,7 @@ const assert = require('assert');
 const { parseArgs, countParser } = require('../../src/lib/parseArgs.js');
 const { assertCountValidity } = require('../../src/lib/validate.js');
 describe.only('parseArgs', () => {
-  it.only('should parse args only for file name.', () => {
+  it('should parse args only for file name.', () => {
     const allOptions = [
       {
         flag: '-n',
@@ -17,11 +17,12 @@ describe.only('parseArgs', () => {
     assert.deepStrictEqual(actual, parsedArgs);
   });
 
-  it('should parse args for filename and number option', () => {
+  it.only('should parse args for filename and number option', () => {
     const allOptions = [
       {
         flag: '-n',
         noValue: false,
+        parser: countParser,
         validate: assertCountValidity
       },
     ];

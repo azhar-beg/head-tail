@@ -5,46 +5,41 @@ const { createIterator } = require('./createIterator.js');
 
 const countParser = function (count) {
   this.validate(count);
-  return { flag: this.flag, count };
+  return { flag: this.flag, count: +count };
 };
+
 
 const { assertCountValidity,
   assertOnlyOne,
   assertOptionValidity,
   assertNoArg } = require('./validate.js');
 
+const last = function (option1, option2) {
+  assertOnlyOne(option1, option2);
+};
+
 const isOption = arg => arg.startsWith('-');
 
-const getOption = function (argsIterator) {
-  const option = argsIterator.currentArg();
-  assertOptionValidity(option);
+const parseOption = function (argsIterator, parsingDetails) {
+  assertNoArg(argsIterator.restOfArgs());
+  const allOptions = [];
+  while (isOption(argsIterator.currentArg()) && argsIterator.currentArg()) {
+    const flag = argsIterator.currentArg();
+    const detail = parsingDetails.find(detail => detail.flag === flag);
+    assertOptionValidity(flag);
+    const option = detail.parser(argsIterator.nextArg());
+    allOptions.push(option);
+    argsIterator.nextArg();
+  }
+  const option = allOptions.reduce(last);
   return option;
 };
 
-const getValue = function (argsIterator, option) {
-  const value = argsIterator.nextArg();
-  assertCountValidity(value, option);
-  return value;
-};
-
-const parseOption = function (argsIterator) {
-  assertNoArg(argsIterator.restOfArgs());
-  let options;
-  while (isOption(argsIterator.currentArg()) && argsIterator.currentArg()) {
-    const option = getOption(argsIterator);
-    const optionVal = getValue(argsIterator, option);
-    assertOnlyOne(options, { option, optionVal });
-    options = { option, count: +optionVal };
-    argsIterator.nextArg();
-  }
-  return options;
-};
-
-const parseArgs = function (commandLineArgs, allOptions, defaultOption) {
+const parseArgs = function (commandLineArgs, parsingDetails, defaultOption) {
   const args = splitArgs(commandLineArgs);
   assertNoArg(args);
   const iterableArgs = createIterator(args);
-  let option = parseOption(iterableArgs, allOptions);
+  let option = parseOption(iterableArgs, parsingDetails);
   option = option || defaultOption;
   const files = iterableArgs.restOfArgs();
   return { files, option };

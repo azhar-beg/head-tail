@@ -1,5 +1,5 @@
 const areSwitchesSame = (option1, option2) => {
-  return option1 ? option1.flag === option2.flag : true;
+  return option1.flag === option2.flag;
 };
 
 const noArg = () => {
@@ -13,8 +13,8 @@ const illegalCount = (name, count) => {
 };
 
 const illegalOption = (option) => {
-  const message = `head: illegal option -- ${option[1]}`;
-  const usage = 'usage: head[-n lines | -c bytes][file ...]';
+  const message = `tail: illegal option -- ${option[1]}`;
+  const usage = 'usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
   return { message: message + '\n' + usage };
 };
 
@@ -25,7 +25,10 @@ const noOptionArg = (option) => {
 };
 
 const illegalCombination = () => {
-  return { message: 'head: can\'t combine line and byte counts' };
+  return {
+    message:
+      'usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]'
+  };
 };
 
 const assertOptionValidity = function (option) {

@@ -1,8 +1,9 @@
 **TAIL**
 **TODO**
+- [ ] Make parse work with -n and -c
 - [ ] Make generic parse args
 - [ ] Make tail work from command line with valid options.
-- [ ] Male tail work for '-n'
+- [ ] Make tail work for '-n'
 **DONE**
 - [x] Make tail work for single file without any option.
 - [x] Made tail work only for one file content.
