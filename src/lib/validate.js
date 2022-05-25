@@ -9,7 +9,7 @@ const noArg = () => {
 };
 
 const illegalCount = (name, count) => {
-  return { message: `head: illegal ${name} count -- ${count}` };
+  return { message: `tail: illegal offset -- ${count}` };
 };
 
 const illegalOption = (option) => {
@@ -19,8 +19,8 @@ const illegalOption = (option) => {
 };
 
 const noOptionArg = (option) => {
-  const message = `head: option requires an argument -- ${option[1]}`;
-  const usage = 'usage: head[-n lines | -c bytes][file ...]';
+  const message = `tail: option requires an argument -- ${option[1]}`;
+  const usage = 'usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
   return { message: message + '\n' + usage };
 };
 

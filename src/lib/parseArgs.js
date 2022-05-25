@@ -16,6 +16,7 @@ const { assertCountValidity,
 
 const last = function (option1, option2) {
   assertOnlyOne(option1, option2);
+  return option2;
 };
 
 const isOption = arg => arg.startsWith('-');
@@ -30,6 +31,9 @@ const parseOption = function (argsIterator, parsingDetails) {
     const option = detail.parser(argsIterator.nextArg());
     allOptions.push(option);
     argsIterator.nextArg();
+  }
+  if (allOptions.length < 2) {
+    return allOptions[0];
   }
   const option = allOptions.reduce(last);
   return option;
