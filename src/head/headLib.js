@@ -1,5 +1,6 @@
-const { splitContent, joinContent } = require('../lib/stringUtils.js');
 const { parseArgs } = require('./parseArgs.js');
+const splitContent = (content, separator) => content.split(separator);
+const joinContent = (lines, separator) => lines.join(separator);
 
 const errorMsg = file => `head: ${file}: No such file or directory`;
 
