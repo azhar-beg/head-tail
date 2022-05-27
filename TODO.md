@@ -21,14 +21,14 @@
 # HEAD
 - **TODO:**
   - [ ] validate args returned from structureArgs
-  - [ ] Changed name of headMain to headFiles and change test file name
-  - [ ] Refactor printer, think better name for printHead.
-
 - **MAYBE:**
   - [ ] Consider separating test from `testHeadLib`
-  - [ ] Consider better name for `headMultipleFile`.
+  - [ ] Changed name of headMain to headFiles and change test file name
 
 - **DONE:**
+  - [x] Extract printing functionality from headMain
+  - [x] Consider better name for `headMultipleFile`.
+  - [x] Refactor printer, think better name for printHead.
   - [x] refactor head and printer
   - [x] Changed names of object keys and variables.
   - [x] Create separate directory structure for head and tail in src and test
