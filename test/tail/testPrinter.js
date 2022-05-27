@@ -19,7 +19,7 @@ const mockConsole = function (input, expectedArgs) {
 };
 
 describe('printTail', () => {
-  it.only('Should print content of given file', () => {
+  it('Should print content of given file', () => {
     const errInput = [];
     const outInput = [];
     const outExpected = ['hello'];
@@ -31,7 +31,7 @@ describe('printTail', () => {
     assert.deepStrictEqual(outInput, outExpected);
   });
 
-  it.only('Should print content of given file and error of bad file', () => {
+  it('Should print content of given file and error of bad file', () => {
     const errInput = [];
     const outInput = [];
     const errExpected = ['head: a: No such file or directory'];
@@ -45,7 +45,7 @@ describe('printTail', () => {
     assert.deepStrictEqual(errExpected, errInput);
   });
 
-  it.only('Should print single error with console.error', () => {
+  it('Should print single error with console.error', () => {
     const errInput = [];
     const outInput = [];
     const errExpected = ['head: a: No such file or directory'];

@@ -1,13 +1,18 @@
-const { splitContent, joinContent } = require('../../src/lib/stringUtils.js');
+const splitContent = (content, separator) => content.split(separator);
+const joinContent = (lines, separator) => lines.join(separator);
+
 const { parseTail } = require('./parseTail');
 
 const extractContent = (content, count) => content.slice(-count);
 
 const getSeparator = ({ flag }) => flag === '-c' ? '' : '\n';
 
-const tail = function (fileContent, { count }, separator) {
+const tail = function (fileContent, { count, reverse }, separator) {
   const content = splitContent(fileContent, separator);
-  const extractedContent = extractContent(content, count);
+  let extractedContent = extractContent(content, count);
+  if (reverse) {
+    extractedContent = extractedContent.reverse();
+  }
   return joinContent(extractedContent, separator);
 };
 
