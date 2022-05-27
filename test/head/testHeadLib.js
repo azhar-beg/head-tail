@@ -1,5 +1,9 @@
 const assert = require('assert');
-const { readFile, headMultipleFiles, extractContent, head } = require('../../src/head/headLib.js');
+const {
+  readFile,
+  headFilesContent,
+  extractContent,
+  head } = require('../../src/head/headLib.js');
 
 const mockReadFile = (files) => {
   return function (fileName, encoding) {
@@ -10,7 +14,7 @@ const mockReadFile = (files) => {
 };
 
 describe('extractContent', () => {
-  it('Should return given line for one line', () => {
+  it('Should return given line for one line content', () => {
     assert.deepStrictEqual(extractContent(['hey'], 1), ['hey']);
     assert.deepStrictEqual(extractContent(['bye'], 1), ['bye']);
   });
@@ -61,36 +65,40 @@ describe('head', () => {
   });
 });
 
-describe('headMultipleFiles', () => {
+describe('headFilesContent', () => {
   it('should head multiple file content', () => {
-    const expected = [{
-      fileName: 'a.txt', content: 'hello',
-      fileExist: true
-    },
-    { fileName: 'b.txt', content: 'bye', fileExist: true }
+    const expected = [
+      { fileName: 'a.txt', content: 'hello', fileExist: true },
+      { fileName: 'b.txt', content: 'bye', fileExist: true }
     ];
+
     const file1 = { fileName: 'a.txt', fileContent: 'hello', fileExist: true };
     const file2 = { fileName: 'b.txt', fileContent: 'bye', fileExist: true };
     const filesContent = [file1, file2];
     const subArgs = { option: '-n', count: '10' };
-    assert.deepStrictEqual(headMultipleFiles(filesContent, subArgs), expected);
+    assert.deepStrictEqual(headFilesContent(filesContent, subArgs), expected);
   });
 
   it('should head content of single file', () => {
     const content = { fileName: 'b.txt', fileContent: 'bye', fileExist: true };
-    const expected = [{
-      fileName: 'b.txt', content: 'bye',
-      fileExist: true
-    }];
+
+    const expected = [
+      { fileName: 'b.txt', content: 'bye', fileExist: true }
+    ];
+
     const subArgs = { option: '-n', count: '10' };
-    assert.deepStrictEqual(headMultipleFiles([content], subArgs), expected);
+    assert.deepStrictEqual(headFilesContent([content], subArgs), expected);
   });
 });
 
 describe('readFile', () => {
-  it('Should read a file', () => {
+  it('Should read a file if when file exist', () => {
     const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
-    const expected = { fileName: 'a.txt', fileExist: true, fileContent: 'hello' };
+
+    const expected = {
+      fileName: 'a.txt', fileExist: true, fileContent: 'hello'
+    };
+
     assert.deepStrictEqual(readFile(mockedReadFile, 'a.txt'), expected);
   });
 });

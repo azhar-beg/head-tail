@@ -18,7 +18,7 @@ const structureHead = function (fileStatus, options, separator) {
   return { fileName, fileExist };
 };
 
-const headMultipleFiles = function (filesStatus, options) {
+const headFilesContent = function (filesStatus, options) {
   const separator = options.option === '-c' ? '' : '\n';
   const headContent = filesStatus.map(fileStatus => structureHead(
     fileStatus, options, separator));
@@ -34,17 +34,17 @@ const readFile = function (fileReader, fileName) {
   }
 };
 
-const headMain = function (fileReader, ...args) {
+const headFiles = function (fileReader, ...args) {
   const { fileNames, options } = parseArgs(args);
   const filesStatus = [];
   for (let index = 0; index < fileNames.length; index++) {
     filesStatus.push(readFile(fileReader, fileNames[index]));
   }
-  return headMultipleFiles(filesStatus, options);
+  return headFilesContent(filesStatus, options);
 };
 
 exports.extractContent = extractContent;
 exports.head = head;
-exports.headMain = headMain;
-exports.headMultipleFiles = headMultipleFiles;
+exports.headFiles = headFiles;
+exports.headFilesContent = headFilesContent;
 exports.readFile = readFile;

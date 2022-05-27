@@ -1,15 +1,14 @@
-const { printHead } = require('./src/head/printer.js');
+const { headMain } = require('./src/head/headMain.js');
 const fs = require('fs');
 
 const main = () => {
   const print = { stdOut: console.log, stdErr: console.error };
   try {
-    const exitCode = printHead(print,
+    process.exitCode = headMain(print,
       fs.readFileSync, ...process.argv.slice(2));
-    process.exit(exitCode);
   } catch (error) {
     console.error(error.message);
-    process.exit(1);
+    process.exitCode = 1;
   }
 };
 

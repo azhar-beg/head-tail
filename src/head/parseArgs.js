@@ -1,4 +1,3 @@
-const { splitArgs } = require('../lib/splitArgs.js');
 const { createIterator } = require('./createIterator.js');
 const { assertCountValidity,
   assertOnlyOne,
@@ -6,6 +5,22 @@ const { assertCountValidity,
   assertNoArg } = require('./validate.js');
 
 const isOption = arg => arg.startsWith('-');
+
+const isNumericOption = arg => /^-\d+$/.test(arg);
+
+const splitFlag = arg => arg.slice(0, 2);
+const splitCount = arg => arg.slice(2);
+
+const splitArg = arg => {
+  if (isNumericOption(arg)) {
+    return ['-n', arg.slice(1)];
+  }
+  return isOption(arg) ? [splitFlag(arg), splitCount(arg)] : arg;
+};
+
+const standardizeArgs = function (args) {
+  return args.flatMap(splitArg).filter(arg => arg.length);
+};
 
 const getOption = function (argsIterator) {
   const option = argsIterator.currentArg();
@@ -33,7 +48,7 @@ const parseOption = function (argsIterator) {
 };
 
 const parseArgs = function (commandLineArgs) {
-  const args = splitArgs(commandLineArgs);
+  const args = standardizeArgs(commandLineArgs);
   const argsIterator = createIterator(args);
   let parsedOption = parseOption(argsIterator);
   parsedOption = parsedOption || { option: '-n', count: 10 };
@@ -43,3 +58,4 @@ const parseArgs = function (commandLineArgs) {
 
 exports.parseArgs = parseArgs;
 exports.parseOption = parseOption;
+exports.standardizeArgs = standardizeArgs;

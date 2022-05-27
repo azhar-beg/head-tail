@@ -1,5 +1,8 @@
 const assert = require('assert');
-const { parseOption, parseArgs } = require('../../src/head/parseArgs.js');
+const { parseOption,
+  parseArgs,
+  standardizeArgs } = require('../../src/head/parseArgs.js');
+
 const { createIterator } = require('../../src/head/createIterator.js');
 
 describe('parseArgs', () => {
@@ -92,5 +95,19 @@ describe('parseOption', () => {
     const iterator = createIterator([]);
     const expected = { message: 'usage: head[-n lines | -c bytes][file ...]' };
     assert.throws(() => parseOption(iterator), expected);
+  });
+});
+
+describe('standardizeArgs', () => {
+  it('should return give array', () => {
+    assert.deepStrictEqual(standardizeArgs(['-n', '1']), ['-n', '1']);
+  });
+
+  it('Should separate number and option', () => {
+    assert.deepStrictEqual(standardizeArgs(['-n4']), ['-n', '4']);
+  });
+
+  it('Should add -n by default for -number', () => {
+    assert.deepStrictEqual(standardizeArgs(['-4']), ['-n', '4']);
   });
 });

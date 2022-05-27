@@ -1,4 +1,4 @@
-const { headMain } = require('./headLib.js');
+const { headFiles } = require('./headLib.js');
 
 const errorMsg = file => `head: ${file}: No such file or directory`;
 
@@ -15,22 +15,22 @@ const printer = function (print, fileStatus, separator) {
   print.stdErr(errorMsg(fileName));
 };
 
-const oneFile = content => content.length <= 1;
+const isOneFile = content => content.length <= 1;
 
-const printHead = function (print, fileReader, ...args) {
-  const headContent = headMain(fileReader, ...args);
-  if (oneFile(headContent) && headContent[0].fileExist) {
-    print.stdOut(headContent[0].content);
+const headMain = function (print, fileReader, ...args) {
+  const fileHeads = headFiles(fileReader, ...args);
+  if (isOneFile(fileHeads) && fileHeads[0].fileExist) {
+    print.stdOut(fileHeads[0].content);
     return 0;
   }
 
   let separator = '';
-  headContent.forEach(content => {
+  fileHeads.forEach(content => {
     printer(print, content, separator);
     separator = '\n';
   });
 
-  return headContent.every(file => file.fileExist) ? 0 : 1;
+  return fileHeads.every(file => file.fileExist) ? 0 : 1;
 };
 
-exports.printHead = printHead;
+exports.headMain = headMain;
