@@ -1,14 +1,14 @@
 # TAIL
 
 - **TODO**
-
   - [ ] Make generic parse args
-  - [ ] Make tailParser for `-r` and `-q`
   - [ ] Make tail work from command line with valid options.
-  - [ ] Restructure test actual and expected.
+
 - **MAYBE**
 
 - **DONE**
+  - [x] Restructure test actual and expected.
+  - [x] Make tailParser for `-r` and `-q`
   - [x] Make printer for tail
   - [x] Make tail work for '-n'
   - [x] Make parse work with -n and -c
@@ -19,13 +19,15 @@
 ---
 
 # HEAD
+
 - **TODO:**
   - [ ] validate args returned from structureArgs
+
 - **MAYBE:**
   - [ ] Consider separating test from `testHeadLib`
-  - [ ] Changed name of headMain to headFiles and change test file name
 
 - **DONE:**
+  - [x] Change name of headMain to headFiles and change test file name
   - [x] Extract printing functionality from headMain
   - [x] Consider better name for `headMultipleFile`.
   - [x] Refactor printer, think better name for printHead.

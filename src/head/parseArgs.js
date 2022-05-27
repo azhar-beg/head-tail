@@ -79,7 +79,6 @@ const assertNoArg = (args) => {
   throw noArg();
 };
 
-
 const getOption = function (argsIterator) {
   const option = argsIterator.currentArg();
   assertOptionValidity(option);

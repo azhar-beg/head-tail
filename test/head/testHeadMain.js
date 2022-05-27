@@ -1,4 +1,4 @@
-const { headMain, printHead } = require('../../src/head/headMain.js');
+const { headMain } = require('../../src/head/headMain.js');
 const assert = require('assert');
 
 const mockReadFile = (files) => {
@@ -58,19 +58,5 @@ describe('headMain', () => {
     assert.deepStrictEqual(headMain(print, mockedReadFile, 'a'), 1);
     assert.deepStrictEqual(outInput, outExpected);
     assert.deepStrictEqual(errExpected, errInput);
-  });
-});
-
-describe('printHead', () => {
-  it('should print of single file', () => {
-    const arg = [
-      { fileName: 'b.txt', content: 'bye', fileExist: true }
-    ];
-    const outInput = [];
-    const outExpected = ['bye'];
-    const printOut = mockConsole(outInput, outExpected);
-    const print = { stdOut: printOut };
-    printHead(arg, print);
-    assert.deepStrictEqual(outInput, outExpected);
   });
 });
