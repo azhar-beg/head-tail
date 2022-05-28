@@ -1,4 +1,4 @@
-const { printHead } = require('../../src/head/headLib.js');
+const { printHead } = require('../../src/head/printHead.js');
 const assert = require('assert');
 
 const mockConsole = function (input, expectedArgs) {

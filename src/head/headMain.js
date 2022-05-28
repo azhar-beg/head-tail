@@ -1,4 +1,5 @@
-const { headFiles, printHead } = require('./headLib.js');
+const { headFiles } = require('./headLib.js');
+const { printHead } = require('./printHead.js');
 
 const headMain = function (print, fileReader, ...args) {
   const fileHeads = headFiles(fileReader, ...args);
