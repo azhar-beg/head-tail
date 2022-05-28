@@ -97,7 +97,9 @@ const parseOption = function (argsIterator) {
   while (isOption(argsIterator.currentArg()) && argsIterator.currentArg()) {
     const option = getOption(argsIterator);
     const optionVal = getValue(argsIterator, option);
+
     assertOnlyOne(options, { option, optionVal });
+
     options = { option, count: +optionVal };
     argsIterator.nextArg();
   }
@@ -107,8 +109,10 @@ const parseOption = function (argsIterator) {
 const parseArgs = function (commandLineArgs) {
   const args = standardizeArgs(commandLineArgs);
   const argsIterator = createIterator(args);
+
   let parsedOption = parseOption(argsIterator);
   parsedOption = parsedOption || { option: '-n', count: 10 };
+
   const fileNames = argsIterator.restOfArgs();
   return { fileNames, options: parsedOption };
 };

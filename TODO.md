@@ -22,12 +22,12 @@
 
 - **TODO:**
   - [ ] validate args returned from structureArgs
-  - [ ] Decide error while reading file.
 
 - **MAYBE:**
   - [ ] Consider separating test from `testHeadLib`
 
 - **DONE:**
+  - [x] Decide error while reading file.
   - [x] Change name of headMain to headFiles and change test file name
   - [x] Extract printing functionality from headMain
   - [x] Consider better name for `headMultipleFile`.

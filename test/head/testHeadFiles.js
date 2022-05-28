@@ -60,7 +60,7 @@ describe('headFiles', () => {
     const actual = headFiles(mockedReadFile, 'b.txt');
     const expected = [{
       fileName: 'b.txt',
-      error: 'head: b.txt: no such file or directory'
+      error: 'head: b.txt: No such file or directory'
     }];
     assert.deepStrictEqual(actual, expected);
   });
@@ -73,7 +73,7 @@ describe('headFiles', () => {
       content: 'hi'
     }, {
       fileName: 'c.txt',
-      error: 'head: c.txt: no such file or directory'
+      error: 'head: c.txt: No such file or directory'
     }];
     assert.deepStrictEqual(actual, expected);
   });

@@ -1,9 +1,12 @@
-const { read } = require('fs');
 const { parseArgs } = require('./parseArgs.js');
 const splitContent = (content, separator) => content.split(separator);
 const joinContent = (lines, separator) => lines.join(separator);
 
 const identity = arg => arg;
+
+const fileNotFound = fileName => `head: ${fileName}: No such file or directory`;
+
+const directoryError = fileName => `head: Error reading ${fileName}`;
 
 const header = fileName => `==> ${fileName} <==\n`;
 
@@ -21,33 +24,34 @@ const head = function (fileContent, { count }, separator) {
   return joinContent(content, separator);
 };
 
-const structureHead = function (fileData, options, separator) {
-  const { fileName, fileContent } = fileData;
-  if (fileContent) {
-    const content = head(fileContent, options, separator);
-    return { fileName, content };
-  }
-  return fileData;
+const getErrorMessage = function (code, fileName) {
+  const errors = {
+    ENOENT: fileNotFound(fileName),
+    EISDIR: directoryError(fileName),
+  };
+  return errors[code];
 };
 
-const getErrorMessage = function (error, fileName) {
-  const message = error.message.slice(error.code.length).split(',')[0];
-  return `head: ${fileName}` + message;
+const structureHead = function (fileName, fileData, options, separator) {
+  if (fileData.code) {
+    const error = getErrorMessage(fileData.code, fileName);
+    return { error, fileName };
+  }
+  const content = head(fileData, options, separator);
+  return { content, fileName };
 };
 
 const readFile = function (fileReader, fileName) {
   try {
-    const fileContent = fileReader(fileName, 'utf8');
-    return { fileContent, fileName };
-  } catch (err) {
-    const error = getErrorMessage(err, fileName);
-    return { error, fileName };
+    return fileReader(fileName, 'utf8');
+  } catch ({ code }) {
+    return { code };
   }
 };
 
 const headFile = function (fileName, fileReader, options, separator) {
   const fileData = readFile(fileReader, fileName);
-  return structureHead(fileData, options, separator);
+  return structureHead(fileName, fileData, options, separator);
 };
 
 const headFiles = function (fileReader, ...args) {

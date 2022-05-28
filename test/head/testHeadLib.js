@@ -76,7 +76,7 @@ describe('readFile', () => {
   it('Should read a file if when file exist', () => {
     const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
 
-    const expected = { fileContent: 'hello', fileName: 'a.txt' };
+    const expected = 'hello';
 
     assert.deepStrictEqual(readFile(mockedReadFile, 'a.txt'), expected);
   });
@@ -84,7 +84,7 @@ describe('readFile', () => {
     const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
 
     const expected =
-      { error: 'head: b.txt: no such file or directory', fileName: 'b.txt' };
+      { code: 'ENOENT' };
     assert.deepStrictEqual(readFile(mockedReadFile, 'b.txt'), expected);
   });
 });
