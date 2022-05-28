@@ -26,6 +26,7 @@ describe('printHead', () => {
     const arg = [{
       fileExist: false,
       fileName: 'c.txt',
+      error: 'head: c.txt: No such file or directory'
     }];
 
     const errInput = [];
@@ -40,6 +41,7 @@ describe('printHead', () => {
     const arg = [{
       fileExist: false,
       fileName: 'c.txt',
+      error: 'head: c.txt: No such file or directory'
     },
     {
       fileExist: true,

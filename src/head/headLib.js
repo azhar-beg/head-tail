@@ -1,13 +1,14 @@
+const { read } = require('fs');
 const { parseArgs } = require('./parseArgs.js');
 const splitContent = (content, separator) => content.split(separator);
 const joinContent = (lines, separator) => lines.join(separator);
 
-const errorMsg = file => `head: ${file}: No such file or directory`;
-
 const identity = arg => arg;
 
+const header = fileName => `==> ${fileName} <==\n`;
+
 const appendHead = (content, fileName, separator) => {
-  return `${separator}==> ${fileName} <==\n${content}`;
+  return separator + header(fileName) + content;
 };
 
 const isOneFile = content => content.length <= 1;
@@ -20,47 +21,48 @@ const head = function (fileContent, { count }, separator) {
   return joinContent(content, separator);
 };
 
-const structureHead = function (fileStatus, options, separator) {
-  const { fileName, fileContent, fileExist } = fileStatus;
-  if (fileExist) {
+const structureHead = function (fileData, options, separator) {
+  const { fileName, fileContent } = fileData;
+  if (fileContent) {
     const content = head(fileContent, options, separator);
-    return { fileName, content, fileExist };
+    return { fileName, content };
   }
-  return { fileName, fileExist };
+  return fileData;
 };
 
-const headFilesContent = function (filesStatus, options) {
-  const separator = options.option === '-c' ? '' : '\n';
-  const headContent = filesStatus.map(fileStatus => structureHead(
-    fileStatus, options, separator));
-  return headContent;
+const getErrorMessage = function (error, fileName) {
+  const message = error.message.slice(error.code.length).split(',')[0];
+  return `head: ${fileName}` + message;
 };
 
 const readFile = function (fileReader, fileName) {
   try {
     const fileContent = fileReader(fileName, 'utf8');
-    return { fileName, fileContent, fileExist: true };
-  } catch (error) {
-    return { fileName, fileExist: false };
+    return { fileContent, fileName };
+  } catch (err) {
+    const error = getErrorMessage(err, fileName);
+    return { error, fileName };
   }
+};
+
+const headFile = function (fileName, fileReader, options, separator) {
+  const fileData = readFile(fileReader, fileName);
+  return structureHead(fileData, options, separator);
 };
 
 const headFiles = function (fileReader, ...args) {
   const { fileNames, options } = parseArgs(args);
-  const filesStatus = [];
-  for (let index = 0; index < fileNames.length; index++) {
-    filesStatus.push(readFile(fileReader, fileNames[index]));
-  }
-  return headFilesContent(filesStatus, options);
+  const separator = options.option === '-c' ? '' : '\n';
+  return fileNames.map(file => headFile(file, fileReader, options, separator));
 };
 
 const printer = function (fileHead, print, formatter, separator) {
-  const { content, fileExist, fileName } = fileHead;
-  if (fileExist) {
+  const { content, fileName, error } = fileHead;
+  if (content) {
     print.stdOut(formatter(content, fileName, separator));
     return;
   }
-  print.stdErr(errorMsg(fileName));
+  print.stdErr(error);
 };
 
 const printHead = function (fileHeads, print) {
@@ -74,7 +76,5 @@ const printHead = function (fileHeads, print) {
 
 exports.extractContent = extractContent;
 exports.head = head;
-exports.headFiles = headFiles;
-exports.headFilesContent = headFilesContent;
-exports.readFile = readFile;
+exports.headFiles = headFiles; exports.readFile = readFile;
 exports.printHead = printHead;

@@ -22,6 +22,7 @@
 
 - **TODO:**
   - [ ] validate args returned from structureArgs
+  - [ ] Decide error while reading file.
 
 - **MAYBE:**
   - [ ] Consider separating test from `testHeadLib`

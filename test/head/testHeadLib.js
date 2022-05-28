@@ -7,9 +7,16 @@ const {
 
 const mockReadFile = (files) => {
   return function (fileName, encoding) {
-    assert.equal(encoding, 'utf8');
-    assert.equal(true, Object.keys(files).includes(fileName));
-    return files[fileName];
+    try {
+      assert.equal(encoding, 'utf8');
+      assert.equal(true, Object.keys(files).includes(fileName));
+      return files[fileName];
+    } catch (err) {
+      throw {
+        message: `ENOENT: no such file or directory, open '${fileName}'`,
+        code: 'ENOENT'
+      };
+    }
   };
 };
 
@@ -65,40 +72,19 @@ describe('head', () => {
   });
 });
 
-describe('headFilesContent', () => {
-  it('should head multiple file content', () => {
-    const expected = [
-      { fileName: 'a.txt', content: 'hello', fileExist: true },
-      { fileName: 'b.txt', content: 'bye', fileExist: true }
-    ];
-
-    const file1 = { fileName: 'a.txt', fileContent: 'hello', fileExist: true };
-    const file2 = { fileName: 'b.txt', fileContent: 'bye', fileExist: true };
-    const filesContent = [file1, file2];
-    const subArgs = { option: '-n', count: '10' };
-    assert.deepStrictEqual(headFilesContent(filesContent, subArgs), expected);
-  });
-
-  it('should head content of single file', () => {
-    const content = { fileName: 'b.txt', fileContent: 'bye', fileExist: true };
-
-    const expected = [
-      { fileName: 'b.txt', content: 'bye', fileExist: true }
-    ];
-
-    const subArgs = { option: '-n', count: '10' };
-    assert.deepStrictEqual(headFilesContent([content], subArgs), expected);
-  });
-});
-
 describe('readFile', () => {
   it('Should read a file if when file exist', () => {
     const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
 
-    const expected = {
-      fileName: 'a.txt', fileExist: true, fileContent: 'hello'
-    };
+    const expected = { fileContent: 'hello', fileName: 'a.txt' };
 
     assert.deepStrictEqual(readFile(mockedReadFile, 'a.txt'), expected);
+  });
+  it('Should return error message for non existing file', () => {
+    const mockedReadFile = mockReadFile({ 'a.txt': 'hello' });
+
+    const expected =
+      { error: 'head: b.txt: no such file or directory', fileName: 'b.txt' };
+    assert.deepStrictEqual(readFile(mockedReadFile, 'b.txt'), expected);
   });
 });
