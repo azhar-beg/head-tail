@@ -140,7 +140,6 @@ const parseArgs = function (commandLineArgs, parsingDetails, defaultOption) {
   parsingDetails.assertNoArg(args);
   const iterableArgs = createIterator(args);
   let option = parseOption(iterableArgs, parsingDetails);
-  option = option || defaultOption;
   const files = iterableArgs.restOfArgs();
   return { files, option };
 };

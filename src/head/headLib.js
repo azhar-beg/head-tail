@@ -52,4 +52,5 @@ const headFiles = function (fileReader, ...args) {
 
 exports.extractContent = extractContent;
 exports.head = head;
-exports.headFiles = headFiles; exports.readFile = readFile;
+exports.headFiles = headFiles;
+exports.readFile = readFile;

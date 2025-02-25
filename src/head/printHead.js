@@ -2,7 +2,7 @@ const header = fileName => `==> ${fileName} <==\n`;
 
 const identity = arg => arg;
 
-const appendHead = (content, fileName, separator) => {
+const addHeader = (content, fileName, separator) => {
   return separator + header(fileName) + content;
 };
 
@@ -18,7 +18,7 @@ const printer = function (fileHead, print, formatter, separator) {
 };
 
 const printHead = function (fileHeads, print) {
-  const formatter = isOneFile(fileHeads) ? identity : appendHead;
+  const formatter = isOneFile(fileHeads) ? identity : addHeader;
   let separator = '';
   fileHeads.forEach(fileHead => {
     printer(fileHead, print, formatter, separator);
